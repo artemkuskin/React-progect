@@ -1,0 +1,33 @@
+body {
+    background-image: url(https://www.strannik51.ru/upload/iblock/7d7/i8zts1i52f81ejbc9ptnjb4d5r6oufao.jpg);
+    background-size: 400px;
+}
+
+.contant {
+    display: flex;
+    justify-content: center;
+}
+
+.block {
+    margin-top: 100px;
+    margin-right: 100px;
+}
+
+.menu {
+    display: flex;
+    width: 200px;
+    height: fit-content;
+    background-color: white;
+    flex-direction: column;
+    border-radius: 5px;
+    text-align: center;
+    box-shadow: 1px 1px 5px -1px black;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-family: monospace;
+    font-weight: 100;
+    font-size: xxx-large;
+}
