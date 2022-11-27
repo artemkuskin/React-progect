@@ -13,15 +13,6 @@ export const SideMenu = () => {
     { name: "drinks", translation: 'Напитки'},
   ];
 
-const [menu, setMenu] = useState([])
-useEffect( () => {
- a()
- console.log(1);
-},[])
-const a = async ()  => {
-  const menu = await getMenu()
-  setMenu(menu)
-}
 
   let result = list.map(function (item) {
     return (

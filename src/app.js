@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { getMenu } from "./api/getMenu";
 import { Basket } from "./Basket/Basket";
 import { Product } from "./Product/Product";
@@ -9,6 +9,15 @@ import styles from "./styles.scss";
 
 const App =  () => {
 
+  const [menu, setMenu] = useState([])
+useEffect( () => {
+  getMenuApi()
+},[])
+const getMenuApi = async ()  => {
+  const menu = await getMenu()
+  setMenu(menu)
+}
+
   return (
     <div>
       <h1 className={styles.title}>СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА</h1>
@@ -18,10 +27,11 @@ const App =  () => {
           <Basket />
         </div>
         <div id={styles.container} className="pizza">
-          <Product/>
+          {menu.map(product => 
+            <Product product={product} key={product.id}/> )}
 
         </div>
-        <div id="fon" className="fon"></div>
+        <div id={styles.fon} className="fon"></div>
       </div>
     </div>
   );
