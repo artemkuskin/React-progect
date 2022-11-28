@@ -1,17 +1,30 @@
 import React from "react"
+import { useDispatch, useSelector } from "react-redux";
+import { basketSlice, categorySlice } from "../redux/reducers";
 import style from './style'
 
 
 
 export  const Product = (props) =>  {
+  const dispatch = useDispatch()
+  const { category } = useSelector((state) => state.categoryReducer);
+  const { basket } = useSelector((state) => state.basketReducer);
+  const { getBasket } = basketSlice.actions;
 
-console.log(props);
+  const elemBasket = {
+    name: props.product.name,
+    id: props.product.id,
+    price: props.product.price,
+    amount: props.product.count
+  }
   return (
+     category === props.product.category
+      ?
   <div className={style.contant_product} id={props.product.id}>
-    <img src="{0}" className={style.item_img}></img>
+    <img src='http://localhost:7000/markets/subway_logo.png' className={style.item_img}></img>
     <div className={style.price_boll3}>
       <div className={style.price_boll}>
-        <img src='#' className={style.img} id={"y"}></img>
+        <img src={`http://localhost:7000/${props.product.category}/${props.product.image}`} className={style.img} id={"y"}></img>
       </div>
     </div>
     <div className={style.text}><p className={style.item_text} id={"b"}>{props.product.name}</p></div>
@@ -24,8 +37,10 @@ console.log(props);
       <button className={style.decrease} id='dec{0}'> - </button>
 
     </div>
-    <button className={style.edit_button} id="button{0}"> В КОРЗИНУ  </button>
+    <button className={style.edit_button} id="button{0}" onClick={() => dispatch(getBasket(elemBasket))}> В КОРЗИНУ  </button>
 
-  </div>
+  </div> 
+  :
+ ''
   )
 }
