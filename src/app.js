@@ -1,9 +1,8 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
 import { getMenu } from "./api/getMenu";
 import { Basket } from "./Basket/Basket";
+import { ModalBody } from "./Modal/ModalBody";
 import { Product } from "./Product/Product";
-import { categorySlice } from "./redux/reducers";
 import { SideMenu } from "./sideMenu/SideMenu";
 import styles from "./styles.scss";
 
@@ -12,13 +11,11 @@ const App = () => {
   useEffect(() => {
     const getMenuApi = async () => {
       const menu = await getMenu();
-      setMenu(menu);
+      setMenu(menu.menu);
     };
 
     getMenuApi();
   }, []);
-
-
 
   return (
     <div>
@@ -33,7 +30,7 @@ const App = () => {
             return <Product product={product} key={product.id} />;
           })}
         </div>
-        <div id={styles.fon} className="fon"></div>
+        <ModalBody />
       </div>
     </div>
   );

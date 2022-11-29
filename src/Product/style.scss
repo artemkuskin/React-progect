@@ -103,3 +103,12 @@ input::-webkit-inner-spin-button {
 .contant_product {
   text-align: center;
 }
+
+.edit_button:hover {
+  background-color: rgba(219, 174, 26, 0.959);
+}
+
+.edit_button:active {
+  background-color: rgba(192, 150, 11, 0.959);
+}
+

@@ -2,31 +2,68 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   category: "pizza",
-  basket: []
+  basket: [],
+  modal: {
+    category: "sizes",
+    open: false
+  },
 };
 
 export const categorySlice = createSlice({
-    name: 'category',
-    initialState,
-    reducers: {
-         selectedCategory(state, action) {
-            state.category = action.payload
-         }
-    }
-})
+  name: "category",
+  initialState,
+  reducers: {
+    selectedCategory(state, action) {
+      state.category = action.payload;
+    },
+  },
+});
 
 export const basketSlice = createSlice({
-    name: 'basket',
+  name: "basket",
+  initialState,
+  reducers: {
+    getBasket(state, action) {
+      state.basket = [...state.basket, action.payload];
+    },
+  },
+});
+
+export const modalCategorySlice = createSlice({
+  name: "category",
+  initialState,
+  reducers: {
+    changeCategory(state, action) {
+      state.modal.category = action.payload;
+    },
+  },
+});
+
+export const openModalSlice = createSlice({
+    name: 'open',
     initialState,
     reducers: {
-        getBasket(state, action) {
-            state.basket = [...state.basket, action.payload]
+        openModal(state, action) {
+            state.modal.open = action.payload
         }
     }
 })
 
-export const categoryReducer =  categorySlice.reducer
-export const basketReducer = basketSlice.reducer
+// export const deleteElemSlice = createSlice({
+//     name: 'delete',
+//     initialState,
+//     reducers: {
+//         deleteBasket(state, action) {
+//           state.basket = state.basket.splice(action.payload, 1)
+//         }
+//     }
+// })
+
+export const categoryReducer = categorySlice.reducer;
+export const basketReducer = basketSlice.reducer;
+export const modalCategoryReducer = modalCategorySlice.reducer;
+export const openModalReducer = openModalSlice.reducer
+//export const deleteBasketReducer = deleteElemSlice.reducer
 
 // const categoryMenuReducer = (state = initState.category, action) => {
 //   switch (action.type) {

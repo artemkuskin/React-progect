@@ -1,17 +1,21 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers, createStore } from "redux"; 
+import { combineReducers } from "redux"; 
 
-import { basketReducer, categoryReducer } from "./reducers";
+import { basketReducer, categoryReducer, modalCategoryReducer, openModalReducer } from "./reducers";
 
 //export const store = createStore(rootReducer)
 
 const rootReducer = combineReducers({
     categoryReducer,
-    basketReducer
+    basketReducer,
+    modalCategoryReducer,
+    openModalReducer,
+    //deleteBasketReducer,
 })
 
 export const setupStore = () => {
     return configureStore({
         reducer: rootReducer
     })
+    
 }

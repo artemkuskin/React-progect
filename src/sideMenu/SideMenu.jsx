@@ -9,8 +9,6 @@ export const SideMenu = () => {
   const { category } = useSelector((state) => state.categoryReducer);
   const { selectedCategory } = categorySlice.actions;
 
-
-
   const list = [
     { name: "pizza", translation: "Пицца" },
     { name: "burgers", translation: "Бургеры" },

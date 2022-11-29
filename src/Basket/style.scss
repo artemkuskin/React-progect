@@ -75,3 +75,10 @@ button {
 #tovar {
     display: inline;
 }
+
+.basketElem {
+    display: flex;
+    align-items: center;
+    width: 252px;
+    justify-content: space-between;
+  }

@@ -1,10 +1,16 @@
 import React from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { deleteElemSlice } from "../redux/reducers";
 import style from "./style";
 
 export const Basket = () => {
   const { basket } = useSelector((state) => state.basketReducer);
   console.log(basket);
+
+  // const dispatch = useDispatch();
+  // const { deleteBasket } = deleteElemSlice.actions;
+  // console.log(deleteBasket());
+
   return (
     <div className={style.basket}>
       <div className={style.basket_icon}>
@@ -20,13 +26,11 @@ export const Basket = () => {
           <div id={style.counter_text}>
             {basket.map((elem) => {
               return (
-                <div key={elem.id}  className="basketElem" id="idBasket">
-                  <p className="product-name" id="idBa">
+                <div key={elem.id} className={style.basketElem} id={elem.id * 100}>
+                  <p className="product_name" id="idBa">
                     {elem.name} - {elem.amount}
                   </p>
-                  <button id="0" className="0">
-                    X
-                  </button>
+                  <button className="idBasketButton">X</button>
                 </div>
               );
             })}
