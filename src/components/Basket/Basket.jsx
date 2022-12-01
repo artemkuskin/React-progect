@@ -1,10 +1,14 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteElemSlice } from "../redux/reducers";
+import { appSlice } from "../../Store/slice";
 import style from "./style";
 
 export const Basket = () => {
-  const { basket } = useSelector((state) => state.basketReducer);
+  const dispatch = useDispatch();
+  const { basket } = useSelector((state) => state.appReducer);
+  const { sum } = useSelector((state) => state.appReducer);
+  const { updateSum } = appSlice.actions;
+  const { deleteBasket } = appSlice.actions;
   console.log(basket);
 
   // const dispatch = useDispatch();
@@ -25,19 +29,25 @@ export const Basket = () => {
         <div>
           <div id={style.counter_text}>
             {basket.map((elem) => {
+              const deleteElem = () => {
+                dispatch(deleteBasket(elem.id));
+                dispatch(updateSum());
+              };
               return (
-                <div key={elem.id} className={style.basketElem} id={elem.id * 100}>
+                <div key={elem.id} className={style.basketElem}>
                   <p className="product_name" id="idBa">
                     {elem.name} - {elem.amount}
                   </p>
-                  <button className="idBasketButton">X</button>
+                  <button className="idBasketButton" onClick={() => deleteElem()}>
+                    X
+                  </button>
                 </div>
               );
             })}
           </div>
         </div>
       </div>
-      <p id={style.result_sum}>Итого:0 Руб</p>
+      <p id={style.result_sum}>Итого:{sum} Руб</p>
       <button className={style.basket_button}>ОФОРМИТЬ ЗАКАЗ</button>
     </div>
   );

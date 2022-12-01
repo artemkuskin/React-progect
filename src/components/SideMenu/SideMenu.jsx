@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMenu } from "../api/getMenu";
-import { basketSlice, categorySlice } from "../redux/reducers";
+import { getMenu } from "../../api/getMenu";
+import { appSlice} from "../../Store/slice";
 import style from "./style";
 
 export const SideMenu = () => {
   const dispatch = useDispatch();
-  const { category } = useSelector((state) => state.categoryReducer);
-  const { selectedCategory } = categorySlice.actions;
+  const { category } = useSelector((state) => state.appReducer);
+  const { setCategory } = appSlice.actions;
+
 
   const list = [
     { name: "pizza", translation: "Пицца" },
@@ -24,7 +25,7 @@ export const SideMenu = () => {
       <p
         key={item.name}
         id={item.name}
-        onClick={() => dispatch(selectedCategory(item.name))}
+        onClick={() => dispatch(setCategory(item.name))}
         className={category === item.name ? style.active : style.menu_link}
       >
         {item.translation}

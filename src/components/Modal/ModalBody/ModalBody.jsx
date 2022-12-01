@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMenu } from "../api/getMenu";
+import { getMenu } from "../../../api/getMenu";
 import { ModalCategory } from "../ModalCategory/ModalCategory";
 import { ModalComponent } from "../ModalComponent/ModalComponent";
-import { modalCategorySlice, openModalSlice } from "../redux/reducers";
+import { appSlice, modalCategorySlice, openModalSlice } from "../../../Store/slice";
+import { ResultCustomBurger } from "../ResultCustomBurger/ResultCustomBurger";
 import style from "./style.scss";
 
 export const ModalBody = () => {
@@ -17,17 +18,30 @@ export const ModalBody = () => {
     getMenuApi();
   }, []);
 
-  console.log(menu);
   const dispatch = useDispatch();
-  const { openModal } = openModalSlice.actions;
-  const { modal } = useSelector((state) => state.openModalReducer);
+  const { openModal } = appSlice.actions;
+  const { open , category, elem, modalSum} = useSelector((state) => state.appReducer.modal);
+  const { modalElem } = appSlice.actions;
+
+  const closeModal = () => {
+    dispatch(openModal(false))
+  }
   // console.log(deleteBasket());
 
+  const isResult = category === "result";
+
   return (
-    <div id={style.fon} className={!modal.open ? style.fon : style.modalActive}>
+    <div id={style.fon} className={!open ? style.fon : style.modalActive}>
       <div className={style.content__ingredients} href="1">
         <div className={style.content__ingredients_title}>
-          <span className={style.close_modal_window} onClick={() => {dispatch(openModal(false))}}>X</span>
+          <span
+            className={style.close_modal_window}
+            onClick={() => {
+              closeModal()
+            }}
+          >
+            X
+          </span>
           <h2 className={style.content__ingredients_title_text}>СОБЕРИТЕ СВОЙ СЕНДВИЧ</h2>
         </div>
         <ModalCategory />
@@ -36,12 +50,16 @@ export const ModalBody = () => {
           <button className={style.content__ingredients_button_next_back}>НАЗАД</button>
         </div> */}
         <div id={style.content__ingredients_price} className="sizes">
-          {menu.map((product) => {
-            return <ModalComponent product={product} key={product.id} />;
-          })}
+          {isResult ? (
+            <ResultCustomBurger />
+          ) : (
+            menu.map((product) => {
+              return <ModalComponent product={product} key={product.id} />;
+            })
+          )}
         </div>
         <footer>
-          <h2 className={style.footer_text}>Итого: 0 руб</h2>
+          <h2 className={style.footer_text}>Итого: {modalSum === 0 ? elem.price : modalSum} руб</h2>
         </footer>
       </div>
     </div>

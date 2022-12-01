@@ -1,14 +1,25 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { basketSlice, categorySlice, openModalSlice } from "../redux/reducers";
+import { appSlice, basketSlice, categorySlice, openModalSlice } from "../../Store/slice";
 import style from "./style";
 
 export const Product = (props) => {
+  const [count, setCount] = useState(1);
   const dispatch = useDispatch();
-  const { openModal } = openModalSlice.actions;
-  const { category } = useSelector((state) => state.categoryReducer);
-  const { basket } = useSelector((state) => state.basketReducer);
-  const { getBasket } = basketSlice.actions;
+  const { openModal } = appSlice.actions;
+  const { category } = useSelector((state) => state.appReducer);
+  const { addBasket: getBasket } = appSlice.actions;
+  const { modalElem } = appSlice.actions;
+  const { updateSum } = appSlice.actions;
+  const { changeModalCategory, updateBasket } = appSlice.actions;
+
+  const increment = () => {
+    setCount((props.product.count += 1));
+  };
+
+  const decrement = () => {
+    setCount((props.product.count -= 1));
+  };
 
   const addBasketElem = () => {
     const elemBasket = {
@@ -19,11 +30,14 @@ export const Product = (props) => {
     };
     if (category !== "sandwiches") {
       dispatch(getBasket(elemBasket));
+      dispatch(updateSum());
+      //dispatch(updateBasket(props.product));
     } else {
-      dispatch(openModal(true))
+      dispatch(openModal(true));
+      dispatch(modalElem(props.product));
+      dispatch(changeModalCategory("sizes"));
     }
   };
-
   return category === props.product.category ? (
     <div className={style.contant_product} id={props.product.id}>
       <img src="http://localhost:7000/markets/subway_logo.png" className={style.item_img}></img>
@@ -57,15 +71,15 @@ export const Product = (props) => {
       </p>
       <p className={style.item_link_text}>КОЛИЧЕСТВО</p>
       <div id="{1000}">
-        <button className={style.increase} id="inc{0}">
+        <button className={style.increase} onClick={() => increment()}>
           +
         </button>
-        <input type={style.number} value={props.product.count} className={style.input} readOnly></input>
-        <button className={style.decrease} id="dec{0}">
+        <input type={style.number} value={count} className={style.input} readOnly></input>
+        <button className={style.decrease} onClick={() => decrement()}>
           -
         </button>
       </div>
-      <button className={style.edit_button} id="button{0}" onClick={() => addBasketElem()}>
+      <button className={style.edit_button} onClick={() => addBasketElem()}>
         В КОРЗИНУ
       </button>
     </div>

@@ -1,15 +1,16 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { combineReducers } from "redux"; 
 
-import { basketReducer, categoryReducer, modalCategoryReducer, openModalReducer } from "./reducers";
+import { appReducer, openModalReducer } from "./slice";
 
 //export const store = createStore(rootReducer)
 
 const rootReducer = combineReducers({
-    categoryReducer,
-    basketReducer,
-    modalCategoryReducer,
-    openModalReducer,
+    appReducer,
+   //categoryReducer,
+   // basketReducer,
+   // modalCategoryReducer,
+   // openModalReducer,
     //deleteBasketReducer,
 })
 

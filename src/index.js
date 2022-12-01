@@ -4,7 +4,7 @@ import React from "react";
 
 import App from './app';
 import { Provider } from "react-redux";
-import { setupStore } from "./redux/store";
+import { setupStore } from "./Store/mainStore";
 
 
 
