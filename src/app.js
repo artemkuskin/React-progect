@@ -10,7 +10,7 @@ import styles from "./styles.scss";
 
 const App = () => {
   const [menu, setMenu] = useState([]);
-  const { menu2 } = useSelector((state) => state.appReducer);
+  //const { menu2 } = useSelector((state) => state.appReducer);
 // создать экен "загрузить продукты", запрос к АПИ будет в нем, вызывать через диспатч
 
   useEffect(() => {

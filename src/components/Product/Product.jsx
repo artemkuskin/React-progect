@@ -1,24 +1,20 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice, basketSlice, categorySlice, openModalSlice } from "../../Store/slice";
+import { appSlice } from "../../Store/slice";
 import style from "./style";
 
 export const Product = (props) => {
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
-  const { openModal } = appSlice.actions;
   const { category } = useSelector((state) => state.appReducer);
-  const { addBasket: getBasket } = appSlice.actions;
-  const { modalElem } = appSlice.actions;
-  const { updateSum } = appSlice.actions;
-  const { changeModalCategory, updateBasket } = appSlice.actions;
+  const { addBasket: getBasket, modalElem, updateSum, changeModalCategory, openModal } = appSlice.actions;
 
   const increment = () => {
-    setCount((props.product.count += 1));
+    setCount((count + 1));
   };
 
   const decrement = () => {
-    setCount((props.product.count -= 1));
+    setCount((count - 1));
   };
 
   const addBasketElem = () => {
@@ -26,12 +22,11 @@ export const Product = (props) => {
       name: props.product.name,
       id: props.product.id,
       price: props.product.price,
-      amount: props.product.count,
+      amount: count,
     };
     if (category !== "sandwiches") {
       dispatch(getBasket(elemBasket));
       dispatch(updateSum());
-      //dispatch(updateBasket(props.product));
     } else {
       dispatch(openModal(true));
       dispatch(modalElem(props.product));

@@ -5,15 +5,8 @@ import style from "./style";
 
 export const Basket = () => {
   const dispatch = useDispatch();
-  const { basket } = useSelector((state) => state.appReducer);
-  const { sum } = useSelector((state) => state.appReducer);
-  const { updateSum } = appSlice.actions;
-  const { deleteBasket } = appSlice.actions;
-  console.log(basket);
-
-  // const dispatch = useDispatch();
-  // const { deleteBasket } = deleteElemSlice.actions;
-  // console.log(deleteBasket());
+  const { basket, sum } = useSelector((state) => state.appReducer);
+  const { updateSum, deleteBasket } = appSlice.actions;
 
   return (
     <div className={style.basket}>

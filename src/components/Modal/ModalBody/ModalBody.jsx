@@ -21,12 +21,10 @@ export const ModalBody = () => {
   const dispatch = useDispatch();
   const { openModal } = appSlice.actions;
   const { open , category, elem, modalSum} = useSelector((state) => state.appReducer.modal);
-  const { modalElem } = appSlice.actions;
 
   const closeModal = () => {
     dispatch(openModal(false))
   }
-  // console.log(deleteBasket());
 
   const isResult = category === "result";
 
@@ -45,10 +43,6 @@ export const ModalBody = () => {
           <h2 className={style.content__ingredients_title_text}>СОБЕРИТЕ СВОЙ СЕНДВИЧ</h2>
         </div>
         <ModalCategory />
-        {/* <div className={style.content__ingredients_button}>
-          <button className={style.content__ingredients_button_next}> ВПЕРЕД </button>
-          <button className={style.content__ingredients_button_next_back}>НАЗАД</button>
-        </div> */}
         <div id={style.content__ingredients_price} className="sizes">
           {isResult ? (
             <ResultCustomBurger />

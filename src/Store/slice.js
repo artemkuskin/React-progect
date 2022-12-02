@@ -18,6 +18,7 @@ const initialState = {
     sauces: {},
     allFiling: {},
     modalSum: 0,
+    isActive2: false,
   },
 };
 
@@ -49,9 +50,16 @@ export const appSlice = createSlice({
     changeModalCategory(state, action) {
       state.modal.category = action.payload;
     },
+    deletemodalElem(state, action) {
+      state.modal.isActive2 = state.modal.allFiling[state.modal.category]?.id === action.payload.id
+        ? true
+        : false;
+    },
     openModal(state, action) {
       state.modal.open = action.payload;
       state.modal.allFiling = {};
+      state.modal.allFiling.vegetables = [];
+      state.modal.arrFill = [];
     },
     getMenu(state, action) {
       state.menu2 = action.payload;
@@ -90,26 +98,39 @@ export const appSlice = createSlice({
       state.modal.allFiling.sauces = state.modal.sauces;
     },
     addFilling(state, action) {
-      
       state.modal.fillings.name = action.payload.name;
       state.modal.fillings.id = action.payload.id;
       state.modal.fillings.price = action.payload.price;
       state.modal.fillings.category = action.payload.category;
-      state.modal.arrFill.push(state.modal.fillings);
-      state.modal.allFiling.fillings = [...new Map(state.modal.arrFill.map(item =>
-        [item.id, item])).values()]; 
+      state.modal.allFiling.fillings = state.modal.fillings;
     },
     addVeget(state, action) {
       state.modal.vegetables.name = action.payload.name;
       state.modal.vegetables.id = action.payload.id;
       state.modal.vegetables.price = action.payload.price;
       state.modal.vegetables.category = action.payload.category;
-      state.modal.allFiling.vegetables = state.modal.vegetables;
+      state.modal.arrFill.push(state.modal.vegetables);
+      state.modal.allFiling.vegetables = [...new Map(state.modal.arrFill.map((item) => [item.id, item])).values()];
     },
+
     addModalSum(state, action) {
       state.modal.modalSum = state.modal.elem.price;
+      let sum = 0;
       for (let key in state.modal.allFiling) {
-        state.modal.modalSum += state.modal.allFiling[key].price;
+        if (key !== "vegetables") {
+          state.modal.modalSum += state.modal.allFiling[key].price;
+        }
+      }
+      for (let key in state.modal.allFiling.vegetables) {
+        sum += state.modal.allFiling.vegetables[key].price;
+      }
+      state.modal.modalSum += sum;
+    },
+    modalDeleteElem(state, action) {
+      for (let key in state.modal.allFiling) {
+        if (state.modal.allFiling[key].id === action.payload.id) {
+          delete state.modal.allFiling[key];
+        }
       }
     },
   },

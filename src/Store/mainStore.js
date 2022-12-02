@@ -7,11 +7,6 @@ import { appReducer, openModalReducer } from "./slice";
 
 const rootReducer = combineReducers({
     appReducer,
-   //categoryReducer,
-   // basketReducer,
-   // modalCategoryReducer,
-   // openModalReducer,
-    //deleteBasketReducer,
 })
 
 export const setupStore = () => {

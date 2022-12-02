@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getMenu } from "../../api/getMenu";
-import { appSlice} from "../../Store/slice";
+import { appSlice } from "../../Store/slice";
 import style from "./style";
 
 export const SideMenu = () => {
   const dispatch = useDispatch();
   const { category } = useSelector((state) => state.appReducer);
   const { setCategory } = appSlice.actions;
-
 
   const list = [
     { name: "pizza", translation: "Пицца" },
