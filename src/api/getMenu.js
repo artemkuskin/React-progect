@@ -1,10 +1,8 @@
 import axios from "axios";
-import { useDispatch, useSelector } from "react-redux";
-import { appSlice } from "../Store/slice";
 // .env
-let url = "http://localhost:7000";
+let url = process.env.REACT_APP_URL;
 
-
+console.log(process.env.REACT_APP_URL);
 const instance = axios.create({
   baseURL: url,
 });

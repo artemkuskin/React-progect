@@ -6,17 +6,10 @@ import { ModalComponent } from "../ModalComponent/ModalComponent";
 import { appSlice, modalCategorySlice, openModalSlice } from "../../../Store/slice";
 import { ResultCustomBurger } from "../ResultCustomBurger/ResultCustomBurger";
 import style from "./style.scss";
+import { AllModalComponents } from "../ModalComponent/AllModalComponents";
 
 export const ModalBody = () => {
-  const [menu, setMenu] = useState([]);
-  useEffect(() => {
-    const getMenuApi = async () => {
-      const menu = await getMenu();
-      setMenu(menu.menu2);
-    };
 
-    getMenuApi();
-  }, []);
 
   const dispatch = useDispatch();
   const { openModal } = appSlice.actions;
@@ -47,9 +40,7 @@ export const ModalBody = () => {
           {isResult ? (
             <ResultCustomBurger />
           ) : (
-            menu.map((product) => {
-              return <ModalComponent product={product} key={product.id} />;
-            })
+            <AllModalComponents />
           )}
         </div>
         <footer>

@@ -8,6 +8,11 @@ export const Basket = () => {
   const { basket, sum } = useSelector((state) => state.appReducer);
   const { updateSum, deleteBasket } = appSlice.actions;
 
+  const deleteElem = (id) => {
+    dispatch(deleteBasket(id));
+    dispatch(updateSum());
+  };
+
   return (
     <div className={style.basket}>
       <div className={style.basket_icon}>
@@ -22,16 +27,13 @@ export const Basket = () => {
         <div>
           <div id={style.counter_text}>
             {basket.map((elem) => {
-              const deleteElem = () => {
-                dispatch(deleteBasket(elem.id));
-                dispatch(updateSum());
-              };
+
               return (
                 <div key={elem.id} className={style.basketElem}>
                   <p className="product_name" id="idBa">
                     {elem.name} - {elem.amount}
                   </p>
-                  <button className="idBasketButton" onClick={() => deleteElem()}>
+                  <button className="idBasketButton" onClick={() => deleteElem(elem.id)}>
                     X
                   </button>
                 </div>

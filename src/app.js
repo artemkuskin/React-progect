@@ -3,32 +3,31 @@ import { useDispatch, useSelector } from "react-redux";
 import { getMenu } from "./api/getMenu";
 import { Basket } from "./components/Basket/Basket";
 import { ModalBody } from "./components/Modal/ModalBody/ModalBody";
+import { AllProducts } from "./components/Product/AllProducts";
 import { Product } from "./components/Product/Product";
 import { SideMenu } from "./components/SideMenu/SideMenu";
 import { loadMenu } from "./Store/slice";
 import styles from "./styles.scss";
 
 const App = () => {
-  const [menu, setMenu] = useState([]);
+  // const [menu, setMenu] = useState([]);
   //const { menu2 } = useSelector((state) => state.appReducer);
-// создать экен "загрузить продукты", запрос к АПИ будет в нем, вызывать через диспатч
+  // создать экен "загрузить продукты", запрос к АПИ будет в нем, вызывать через диспатч
 
-  useEffect(() => {
-    const getMenuApi = async () => {
-      const menu = await getMenu();
-      setMenu(menu.menu);
-    };
+  // useEffect(() => {
+  //   const getMenuApi = async () => {
+  //     const menu = await getMenu();
+  //     setMenu(menu.menu);
+  //   };
 
-    getMenuApi();
-  }, []);
+  //   getMenuApi();
+  // }, []);
 
-  console.log(menu);
+  // console.log(menu);
 
-//   const dispatch = useDispatch()
-// dispatch(loadMenu())
-// console.log(menu2);
-
-
+  //   const dispatch = useDispatch()
+  // dispatch(loadMenu())
+  // console.log(menu2);
 
   return (
     <div>
@@ -36,13 +35,9 @@ const App = () => {
       <div className={styles.contant}>
         <div className={styles.block}>
           <SideMenu />
-          <Basket />
+          <Basket />  
         </div>
-        <div id={styles.container} className="pizza">
-          {menu.map((product) => {
-            return <Product product={product} key={product.id} />;
-          })}
-        </div>
+        <AllProducts />
         <ModalBody />
       </div>
     </div>

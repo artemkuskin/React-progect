@@ -51,9 +51,7 @@ export const appSlice = createSlice({
       state.modal.category = action.payload;
     },
     deletemodalElem(state, action) {
-      state.modal.isActive2 = state.modal.allFiling[state.modal.category]?.id === action.payload.id
-        ? true
-        : false;
+      state.modal.isActive2 = state.modal.allFiling[state.modal.category]?.id === action.payload.id ? true : false;
     },
     openModal(state, action) {
       state.modal.open = action.payload;
@@ -76,43 +74,24 @@ export const appSlice = createSlice({
     // modalDeleteElem(state, action) {
     //  state.modal.allFiling[action.payload.category] = {}
     // },
-    addSize(state, action) {
-      state.modal.sizes.name = action.payload.name;
-      state.modal.sizes.id = action.payload.id;
-      state.modal.sizes.price = action.payload.price;
-      state.modal.sizes.category = action.payload.category;
-      state.modal.allFiling.sizes = state.modal.sizes;
+    addFillings(state, action) {
+      if (!Array.isArray(state.modal.allFiling[state.modal.category])) {
+        state.modal[state.modal.category].name = action.payload.name;
+        state.modal[state.modal.category].id = action.payload.id;
+        state.modal[state.modal.category].price = action.payload.price;
+        state.modal[state.modal.category].category = action.payload.category;
+        state.modal.allFiling[state.modal.category] = state.modal[state.modal.category];
+      } else {
+        state.modal[state.modal.category].name = action.payload.name;
+        state.modal[state.modal.category].id = action.payload.id;
+        state.modal[state.modal.category].price = action.payload.price;
+        state.modal[state.modal.category].category = action.payload.category;
+        state.modal.arrFill.push(state.modal[state.modal.category]);
+        state.modal.allFiling[state.modal.category] = [
+          ...new Map(state.modal.arrFill.map((item) => [item.id, item])).values(),
+        ];
+      }
     },
-    addBread(state, action) {
-      state.modal.breads.name = action.payload.name;
-      state.modal.breads.id = action.payload.id;
-      state.modal.breads.price = action.payload.price;
-      state.modal.breads.category = action.payload.category;
-      state.modal.allFiling.breads = state.modal.breads;
-    },
-    addSous(state, action) {
-      state.modal.sauces.name = action.payload.name;
-      state.modal.sauces.id = action.payload.id;
-      state.modal.sauces.price = action.payload.price;
-      state.modal.sauces.category = action.payload.category;
-      state.modal.allFiling.sauces = state.modal.sauces;
-    },
-    addFilling(state, action) {
-      state.modal.fillings.name = action.payload.name;
-      state.modal.fillings.id = action.payload.id;
-      state.modal.fillings.price = action.payload.price;
-      state.modal.fillings.category = action.payload.category;
-      state.modal.allFiling.fillings = state.modal.fillings;
-    },
-    addVeget(state, action) {
-      state.modal.vegetables.name = action.payload.name;
-      state.modal.vegetables.id = action.payload.id;
-      state.modal.vegetables.price = action.payload.price;
-      state.modal.vegetables.category = action.payload.category;
-      state.modal.arrFill.push(state.modal.vegetables);
-      state.modal.allFiling.vegetables = [...new Map(state.modal.arrFill.map((item) => [item.id, item])).values()];
-    },
-
     addModalSum(state, action) {
       state.modal.modalSum = state.modal.elem.price;
       let sum = 0;

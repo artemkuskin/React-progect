@@ -112,3 +112,9 @@ input::-webkit-inner-spin-button {
   background-color: rgba(192, 150, 11, 0.959);
 }
 
+#container {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 1rem;
+  max-width: 900px;
+}

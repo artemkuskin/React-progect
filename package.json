@@ -17,6 +17,7 @@
     "babel-loader": "^9.1.0",
     "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.7.2",
+    "dotenv": "^16.0.3",
     "eslint-plugin-react-hooks": "^4.6.0",
     "html-webpack-plugin": "^5.5.0",
     "mini-css-extract-plugin": "^2.7.0",
@@ -30,11 +31,11 @@
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.0",
     "axios": "^1.2.0",
-    "dotenv": "^16.0.3",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-redux": "^8.0.5",
     "redux": "^4.2.0",
-    "redux-devtools-extension": "^2.13.9"
+    "redux-devtools-extension": "^2.13.9",
+    "webpack-define-envs-plugin": "^0.2.0"
   }
 }
