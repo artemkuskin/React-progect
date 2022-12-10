@@ -1,7 +1,13 @@
 import { createAsyncThunk, createReducer, createSlice } from "@reduxjs/toolkit";
+import axios from "axios";
 import { getMenu } from "../api/getMenu";
+import AuthServices from "../services/AuthService";
+import MenuServices from "../services/MenuServices";
 
 const initialState = {
+  user: {},
+  isAuth: false,
+  isLoading: false,
   menu2: {},
   category: "pizza",
   basket: [],
@@ -22,10 +28,70 @@ const initialState = {
   },
 };
 
+console.log(initialState.isAuth);
+
 export const loadMenu = createAsyncThunk("app/loadMenu", async () => {
-  const menu = await getMenu();
-  return menu;
+  async () => {
+      const response = await MenuServices.fetchMenu();
+      console.log(response);
+      return response.data;
+  }
 });
+
+export const getUser = createAsyncThunk(
+  "app/getUser",
+  async ({ email, password }) => {
+    try {
+      const response = await AuthServices.login(email, password);
+      console.log(response);
+      localStorage.setItem("token", response.data.accessToken);
+      return response.data;
+    } catch (e) {
+      console.log(e.response?.data?.messege);
+    }
+  }
+);
+
+export const registr = createAsyncThunk(
+  "app/registration",
+  async ({ email, password }) => {
+    try {
+      const response = await AuthServices.registration(email, password);
+      console.log(response);
+      localStorage.setItem("token", response.data.accessToken);
+      return response.data;
+    } catch (e) {
+      console.log(e.response?.data?.messege);
+    }
+  }
+);
+
+export const logout = createAsyncThunk(
+  "app/logout",
+  async () => {
+    try {
+      const response = await AuthServices.logout()
+      localStorage.removeItem('token')
+    } catch (e) {
+      console.log(e.response?.data?.messege);
+    }
+  }
+);
+
+export const checkAuth = createAsyncThunk(
+  "app/checkAuth",
+  async () => {
+    try {
+      const response = await axios.get(`http://localhost:5000/api/refresh`, {withCredentials: true})
+     // console.log(response);
+      localStorage.setItem('token', response.data.accessToken)
+      console.log(123423134134121234123);
+      return response.data
+    } catch (e) {
+      console.log(e.response?.data?.messege);
+    }
+  }
+);
 
 export const appSlice = createSlice({
   name: "app",
@@ -51,9 +117,10 @@ export const appSlice = createSlice({
       state.modal.category = action.payload;
     },
     deletemodalElem(state, action) {
-      state.modal.isActive2 = state.modal.allFiling[state.modal.category]?.id === action.payload.id
-        ? true
-        : false;
+      state.modal.isActive2 =
+        state.modal.allFiling[state.modal.category]?.id === action.payload.id
+          ? true
+          : false;
     },
     openModal(state, action) {
       state.modal.open = action.payload;
@@ -65,54 +132,43 @@ export const appSlice = createSlice({
       state.menu2 = action.payload;
     },
     deleteBasket(state, action) {
-      state.basket = state.basket.filter((product) => product.id !== action.payload);
+      state.basket = state.basket.filter(
+        (product) => product.id !== action.payload
+      );
     },
     updateSum(state, action) {
-      state.sum = state.basket.reduce((prev, curr) => prev + curr.price * curr.amount, 0);
+      state.sum = state.basket.reduce(
+        (prev, curr) => prev + curr.price * curr.amount,
+        0
+      );
     },
     modalElem(state, action) {
       state.modal.elem = action.payload;
     },
     // modalDeleteElem(state, action) {
-    //  state.modal.allFiling[action.payload.category] = {}
+    // state.modal.allFiling[action.payload.category] = {}
     // },
-    addSize(state, action) {
-      state.modal.sizes.name = action.payload.name;
-      state.modal.sizes.id = action.payload.id;
-      state.modal.sizes.price = action.payload.price;
-      state.modal.sizes.category = action.payload.category;
-      state.modal.allFiling.sizes = state.modal.sizes;
+    addFillings(state, action) {
+      if (!Array.isArray(state.modal.allFiling[state.modal.category])) {
+        state.modal[state.modal.category].name = action.payload.name;
+        state.modal[state.modal.category].id = action.payload.id;
+        state.modal[state.modal.category].price = action.payload.price;
+        state.modal[state.modal.category].category = action.payload.category;
+        state.modal.allFiling[state.modal.category] =
+          state.modal[state.modal.category];
+      } else {
+        state.modal[state.modal.category].name = action.payload.name;
+        state.modal[state.modal.category].id = action.payload.id;
+        state.modal[state.modal.category].price = action.payload.price;
+        state.modal[state.modal.category].category = action.payload.category;
+        state.modal.arrFill.push(state.modal[state.modal.category]);
+        state.modal.allFiling[state.modal.category] = [
+          ...new Map(
+            state.modal.arrFill.map((item) => [item.id, item])
+          ).values(),
+        ];
+      }
     },
-    addBread(state, action) {
-      state.modal.breads.name = action.payload.name;
-      state.modal.breads.id = action.payload.id;
-      state.modal.breads.price = action.payload.price;
-      state.modal.breads.category = action.payload.category;
-      state.modal.allFiling.breads = state.modal.breads;
-    },
-    addSous(state, action) {
-      state.modal.sauces.name = action.payload.name;
-      state.modal.sauces.id = action.payload.id;
-      state.modal.sauces.price = action.payload.price;
-      state.modal.sauces.category = action.payload.category;
-      state.modal.allFiling.sauces = state.modal.sauces;
-    },
-    addFilling(state, action) {
-      state.modal.fillings.name = action.payload.name;
-      state.modal.fillings.id = action.payload.id;
-      state.modal.fillings.price = action.payload.price;
-      state.modal.fillings.category = action.payload.category;
-      state.modal.allFiling.fillings = state.modal.fillings;
-    },
-    addVeget(state, action) {
-      state.modal.vegetables.name = action.payload.name;
-      state.modal.vegetables.id = action.payload.id;
-      state.modal.vegetables.price = action.payload.price;
-      state.modal.vegetables.category = action.payload.category;
-      state.modal.arrFill.push(state.modal.vegetables);
-      state.modal.allFiling.vegetables = [...new Map(state.modal.arrFill.map((item) => [item.id, item])).values()];
-    },
-
     addModalSum(state, action) {
       state.modal.modalSum = state.modal.elem.price;
       let sum = 0;
@@ -136,10 +192,37 @@ export const appSlice = createSlice({
   },
 
   extraReducers: (builder) => {
-    builder.addCase(loadMenu.fulfilled, (state, action) => {
-      state.menu2 = action.payload;
+    builder.addCase(registr.fulfilled, (state, action) => {
+      state.isAuth = true
+      state.user = action.payload.user;
     });
   },
+  extraReducers: (builder) => {
+    builder.addCase(getUser.fulfilled, (state, action) => {
+      state.isAuth = true;
+      state.user = action.payload.user;
+    });
+  },
+  extraReducers: (builder) => {
+    builder.addCase(logout.fulfilled, (state, action) => {
+      state.isAuth = false;
+      state.user = {}
+    });
+  },
+
+  extraReducers: (builder) => {
+    builder.addCase(checkAuth.fulfilled, (state, action) => {
+      state.isAuth = true;
+      state.user = action.payload.user
+    });
+  },
+
+  // extraReducers: (builder) => {
+  //   builder.addCase(loadMenu.fulfilled, (state, action) => {
+  //     state.menu2 = action.payload;
+  //   });
+  // },
 });
+
 
 export const appReducer = appSlice.reducer;
