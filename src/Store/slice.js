@@ -1,6 +1,5 @@
 import { createAsyncThunk, createReducer, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import { getMenu } from "../api/getMenu";
 import AuthServices from "../services/AuthService";
 import MenuServices from "../services/MenuServices";
 
@@ -8,7 +7,7 @@ const initialState = {
   user: {},
   isAuth: false,
   isLoading: false,
-  menu2: {},
+  menu2: [],
   category: "pizza",
   basket: [],
   sum: 0,
@@ -32,10 +31,10 @@ console.log(initialState.isAuth);
 
 export const loadMenu = createAsyncThunk("app/loadMenu", async () => {
   async () => {
-      const response = await MenuServices.fetchMenu();
-      console.log(response);
-      return response.data;
-  }
+    const response = await MenuServices.fetchMenu();
+    console.log(response);
+    return response.data;
+  };
 });
 
 export const getUser = createAsyncThunk(
@@ -66,32 +65,28 @@ export const registr = createAsyncThunk(
   }
 );
 
-export const logout = createAsyncThunk(
-  "app/logout",
-  async () => {
-    try {
-      const response = await AuthServices.logout()
-      localStorage.removeItem('token')
-    } catch (e) {
-      console.log(e.response?.data?.messege);
-    }
+export const logout = createAsyncThunk("app/logout", async () => {
+  try {
+    const response = await AuthServices.logout();
+    localStorage.removeItem("token");
+  } catch (e) {
+    console.log(e.response?.data?.messege);
   }
-);
+});
 
-export const checkAuth = createAsyncThunk(
-  "app/checkAuth",
-  async () => {
-    try {
-      const response = await axios.get(`http://localhost:5000/api/refresh`, {withCredentials: true})
-     // console.log(response);
-      localStorage.setItem('token', response.data.accessToken)
-      console.log(123423134134121234123);
-      return response.data
-    } catch (e) {
-      console.log(e.response?.data?.messege);
-    }
+export const checkAuth = createAsyncThunk("app/checkAuth", async () => {
+  try {
+    const response = await axios.get(`http://localhost:5000/api/refresh`, {
+      withCredentials: true,
+    });
+    // console.log(response);
+    localStorage.setItem("token", response.data.accessToken);
+    console.log(123423134134121234123);
+    return response.data;
+  } catch (e) {
+    console.log(e.response?.data?.messege);
   }
-);
+});
 
 export const appSlice = createSlice({
   name: "app",
@@ -193,29 +188,45 @@ export const appSlice = createSlice({
 
   extraReducers: (builder) => {
     builder.addCase(registr.fulfilled, (state, action) => {
-      state.isAuth = true
-      state.user = action.payload.user;
-    });
-  },
-  extraReducers: (builder) => {
-    builder.addCase(getUser.fulfilled, (state, action) => {
       state.isAuth = true;
       state.user = action.payload.user;
-    });
-  },
-  extraReducers: (builder) => {
-    builder.addCase(logout.fulfilled, (state, action) => {
-      state.isAuth = false;
-      state.user = {}
-    });
+    }),
+      builder.addCase(getUser.fulfilled, (state, action) => {
+        state.isAuth = true;
+        state.user = action.payload.user;
+      }),
+      builder.addCase(logout.fulfilled, (state, action) => {
+        state.isAuth = false;
+        state.user = {};
+      }),
+      builder.addCase(checkAuth.fulfilled, (state, action) => {
+        state.isAuth = true;
+        state.user = action.payload.user;
+      }),
+      builder.addCase(loadMenu.fulfilled, (state, action) => {
+             state.menu2.push(action.payload);
+          });
   },
 
-  extraReducers: (builder) => {
-    builder.addCase(checkAuth.fulfilled, (state, action) => {
-      state.isAuth = true;
-      state.user = action.payload.user
-    });
-  },
+  // extraReducers: (builder) => {
+  //   builder.addCase(getUser.fulfilled, (state, action) => {
+  //     state.isAuth = true;
+  //     state.user = action.payload.user;
+  //   });
+  // },
+  // extraReducers: (builder) => {
+  //   builder.addCase(logout.fulfilled, (state, action) => {
+  //     state.isAuth = false;
+  //     state.user = {}
+  //   });
+  // },
+
+  // extraReducers: (builder) => {
+  //   builder.addCase(checkAuth.fulfilled, (state, action) => {
+  //     state.isAuth = true;
+  //     state.user = action.payload.user
+  //   });
+  // },
 
   // extraReducers: (builder) => {
   //   builder.addCase(loadMenu.fulfilled, (state, action) => {
@@ -223,6 +234,5 @@ export const appSlice = createSlice({
   //   });
   // },
 });
-
 
 export const appReducer = appSlice.reducer;

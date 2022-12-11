@@ -2,7 +2,7 @@ import axios from "axios";
 import { useDispatch, useSelector } from "react-redux";
 import { appSlice } from "../Store/slice";
 // .env
-let url = "http://localhost:7000";
+let url = "http://localhost:5000";
 
 
 const instance = axios.create({

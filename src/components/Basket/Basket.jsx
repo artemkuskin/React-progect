@@ -11,7 +11,7 @@ export const Basket = () => {
   return (
     <div className={style.basket}>
       <div className={style.basket_icon}>
-        <img alt="" src="http://localhost:7000/basketImg/basket.png" className={style.icon}></img>
+        <img alt="" src="http://localhost:5000/basketImg/basket.png" className={style.icon}></img>
         <h2 className={style.basket_title}>КОРЗИНА</h2>
       </div>
       <div className={style.basket_text}>

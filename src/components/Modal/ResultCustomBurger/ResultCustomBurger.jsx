@@ -36,7 +36,7 @@ export const ResultCustomBurger = () => {
         <div className={style.price_boll2}>
           <div className={style.price_boll}>
             <img
-              src={`http://localhost:7000/${elem.category}/${elem.image}`}
+              src={`http://localhost:5000/${elem.category}/${elem.image}`}
               className={style.content__ingredients_img}
             />{" "}
           </div>

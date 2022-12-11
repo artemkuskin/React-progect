@@ -38,7 +38,7 @@ export const ModalComponent = (props) => {
       <div className={style.price_boll2}>
         <div className={style.price_boll}>
           <img
-            src={`http://localhost:7000/${props.product.category}/${props.product.image}`}
+            src={`http://localhost:5000/${props.product.category}/${props.product.image}`}
             className={style.content__ingredients_img}
             id={props.product.id}
             // onClick={() => addFillings()}

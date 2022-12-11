@@ -35,11 +35,11 @@ export const Product = (props) => {
   };
   return category === props.product.category ? (
     <div className={style.contant_product} id={props.product.id}>
-      <img src="http://localhost:7000/markets/subway_logo.png" className={style.item_img}></img>
+      <img src="http://localhost:5000/markets/subway_logo.png" className={style.item_img}></img>
       <div className={style.price_boll3}>
         <div className={style.price_boll}>
           <img
-            src={`http://localhost:7000/${props.product.category}/${props.product.image}`}
+            src={`http://localhost:5000/${props.product.category}/${props.product.image}`}
             className={style.img}
             id={"y"}
           ></img>
