@@ -5,7 +5,9 @@ import style from "./style";
 
 export const ResultCustomBurger = () => {
   const dispatch = useDispatch();
-  const { elem, allFiling, modalSum } = useSelector((state) => state.appReducer.modal);
+  const { elem, allFiling, modalSum } = useSelector(
+    (state) => state.appReducer.modal
+  );
   const [count, setCount] = useState(1);
   const { addBasket: getBasket, updateSum, openModal } = appSlice.actions;
 
@@ -18,11 +20,11 @@ export const ResultCustomBurger = () => {
   };
 
   const increment = () => {
-    setCount((count + 1));
+    setCount(count + 1);
   };
 
   const decrement = () => {
-    setCount((count - 1));
+    setCount(count - 1);
   };
 
   const addBasket = () => {
@@ -48,12 +50,16 @@ export const ResultCustomBurger = () => {
         <div className={style.block_side}>
           <p>
             Размер:
-            <strong id="sizes-name">{allFiling.sizes !== undefined ? allFiling.sizes.name : "15см"}</strong>
+            <strong id="sizes-name">
+              {allFiling.sizes !== undefined ? allFiling.sizes.name : "15см"}
+            </strong>
           </p>
           <p>
             Хлеб:
             <strong id="breads-name">
-              {allFiling.breads !== undefined ? allFiling.breads.name : "Белый-итальянский"}
+              {allFiling.breads !== undefined
+                ? allFiling.breads.name
+                : "Белый-итальянский"}
             </strong>
           </p>
           <p>
@@ -66,19 +72,31 @@ export const ResultCustomBurger = () => {
           </p>
           <p>
             Соусы:
-            <strong id="sous-name">{allFiling.sauces !== undefined ? allFiling.sauces.name : "Heт"}</strong>
+            <strong id="sous-name">
+              {allFiling.sauces !== undefined ? allFiling.sauces.name : "Heт"}
+            </strong>
           </p>
           <p>
             Начинка:
-            <strong id="fill-name">{allFiling.fillings !== undefined ? allFiling.fillings.name : "Heт"}</strong>
+            <strong id="fill-name">
+              {allFiling.fillings !== undefined
+                ? allFiling.fillings.name
+                : "Heт"}
+            </strong>
           </p>
 
           <h3 id={style.name}>{elem.name}</h3>
         </div>
         <div className={style.counter}>
-          <button className={style.increase} onClick={() => increment()}> + </button>
+          <button className={style.increase} onClick={() => increment()}>
+            {" "}
+            +{" "}
+          </button>
           <input type="number" value={count} className={style.input} readOnly />
-          <button className={style.decrease} onClick={() => decrement()}> - </button>{" "}
+          <button className={style.decrease} onClick={() => decrement()}>
+            {" "}
+            -{" "}
+          </button>{" "}
         </div>
         <button className={style.edit_button_modal} onClick={() => addBasket()}>
           В КОРЗИНУ

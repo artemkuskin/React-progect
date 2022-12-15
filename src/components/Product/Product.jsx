@@ -7,14 +7,20 @@ export const Product = (props) => {
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
   const { category } = useSelector((state) => state.appReducer);
-  const { addBasket: getBasket, modalElem, updateSum, changeModalCategory, openModal } = appSlice.actions;
+  const {
+    addBasket: getBasket,
+    modalElem,
+    updateSum,
+    changeModalCategory,
+    openModal,
+  } = appSlice.actions;
 
   const increment = () => {
-    setCount((count + 1));
+    setCount(count + 1);
   };
 
   const decrement = () => {
-    setCount((count - 1));
+    setCount(count - 1);
   };
 
   const addBasketElem = () => {
@@ -35,7 +41,10 @@ export const Product = (props) => {
   };
   return category === props.product.category ? (
     <div className={style.contant_product} id={props.product.id}>
-      <img src="http://localhost:5000/markets/subway_logo.png" className={style.item_img}></img>
+      <img
+        src="http://localhost:5000/markets/subway_logo.png"
+        className={style.item_img}
+      ></img>
       <div className={style.price_boll3}>
         <div className={style.price_boll}>
           <img
@@ -69,7 +78,12 @@ export const Product = (props) => {
         <button className={style.increase} onClick={() => increment()}>
           +
         </button>
-        <input type={style.number} value={count} className={style.input} readOnly></input>
+        <input
+          type={style.number}
+          value={count}
+          className={style.input}
+          readOnly
+        ></input>
         <button className={style.decrease} onClick={() => decrement()}>
           -
         </button>

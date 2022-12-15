@@ -1,6 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMenu } from "../../api/getMenu";
 import { appSlice } from "../../Store/slice";
 import style from "./style";
 

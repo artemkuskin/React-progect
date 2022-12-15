@@ -27,14 +27,14 @@ const initialState = {
   },
 };
 
-console.log(initialState.isAuth);
-
 export const loadMenu = createAsyncThunk("app/loadMenu", async () => {
-  async () => {
+  try {
     const response = await MenuServices.fetchMenu();
     console.log(response);
     return response.data;
-  };
+  } catch {
+    console.log(e.response?.data?.messege);
+  }
 });
 
 export const getUser = createAsyncThunk(
@@ -42,7 +42,7 @@ export const getUser = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const response = await AuthServices.login(email, password);
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.accessToken);
       return response.data;
     } catch (e) {
@@ -56,7 +56,7 @@ export const registr = createAsyncThunk(
   async ({ email, password }) => {
     try {
       const response = await AuthServices.registration(email, password);
-      console.log(response);
+      // console.log(response);
       localStorage.setItem("token", response.data.accessToken);
       return response.data;
     } catch (e) {
@@ -81,7 +81,7 @@ export const checkAuth = createAsyncThunk("app/checkAuth", async () => {
     });
     // console.log(response);
     localStorage.setItem("token", response.data.accessToken);
-    console.log(123423134134121234123);
+    // console.log(123423134134121234123);
     return response.data;
   } catch (e) {
     console.log(e.response?.data?.messege);
@@ -140,9 +140,6 @@ export const appSlice = createSlice({
     modalElem(state, action) {
       state.modal.elem = action.payload;
     },
-    // modalDeleteElem(state, action) {
-    // state.modal.allFiling[action.payload.category] = {}
-    // },
     addFillings(state, action) {
       if (!Array.isArray(state.modal.allFiling[state.modal.category])) {
         state.modal[state.modal.category].name = action.payload.name;
@@ -204,35 +201,10 @@ export const appSlice = createSlice({
         state.user = action.payload.user;
       }),
       builder.addCase(loadMenu.fulfilled, (state, action) => {
-             state.menu2.push(action.payload);
-          });
+        state.menu2 = action.payload;
+      });
   },
 
-  // extraReducers: (builder) => {
-  //   builder.addCase(getUser.fulfilled, (state, action) => {
-  //     state.isAuth = true;
-  //     state.user = action.payload.user;
-  //   });
-  // },
-  // extraReducers: (builder) => {
-  //   builder.addCase(logout.fulfilled, (state, action) => {
-  //     state.isAuth = false;
-  //     state.user = {}
-  //   });
-  // },
-
-  // extraReducers: (builder) => {
-  //   builder.addCase(checkAuth.fulfilled, (state, action) => {
-  //     state.isAuth = true;
-  //     state.user = action.payload.user
-  //   });
-  // },
-
-  // extraReducers: (builder) => {
-  //   builder.addCase(loadMenu.fulfilled, (state, action) => {
-  //     state.menu2 = action.payload;
-  //   });
-  // },
 });
 
 export const appReducer = appSlice.reducer;

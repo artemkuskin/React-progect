@@ -1,30 +1,21 @@
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getMenu } from "../../../api/getMenu";
 import { ModalCategory } from "../ModalCategory/ModalCategory";
-import { ModalComponent } from "../ModalComponent/ModalComponent";
-import { appSlice, modalCategorySlice, openModalSlice } from "../../../Store/slice";
+import { appSlice } from "../../../Store/slice";
 import { ResultCustomBurger } from "../ResultCustomBurger/ResultCustomBurger";
 import style from "./style.scss";
+import { ModalProductContainer } from "../ModalProductContainer/ModalProductContainer";
 
 export const ModalBody = () => {
-  const [menu, setMenu] = useState([]);
-  useEffect(() => {
-    const getMenuApi = async () => {
-      const menu = await getMenu();
-      setMenu(menu.menu2);
-    };
-
-    getMenuApi();
-  }, []);
-
   const dispatch = useDispatch();
   const { openModal } = appSlice.actions;
-  const { open , category, elem, modalSum} = useSelector((state) => state.appReducer.modal);
+  const { open, category, elem, modalSum } = useSelector(
+    (state) => state.appReducer.modal
+  );
 
   const closeModal = () => {
-    dispatch(openModal(false))
-  }
+    dispatch(openModal(false));
+  };
 
   const isResult = category === "result";
 
@@ -35,25 +26,23 @@ export const ModalBody = () => {
           <span
             className={style.close_modal_window}
             onClick={() => {
-              closeModal()
+              closeModal();
             }}
           >
             X
           </span>
-          <h2 className={style.content__ingredients_title_text}>СОБЕРИТЕ СВОЙ СЕНДВИЧ</h2>
+          <h2 className={style.content__ingredients_title_text}>
+            СОБЕРИТЕ СВОЙ СЕНДВИЧ
+          </h2>
         </div>
         <ModalCategory />
         <div id={style.content__ingredients_price} className="sizes">
-          {isResult ? (
-            <ResultCustomBurger />
-          ) : (
-            menu.map((product) => {
-              return <ModalComponent product={product} key={product.id} />;
-            })
-          )}
+          {isResult ? <ResultCustomBurger /> : <ModalProductContainer />}
         </div>
         <footer>
-          <h2 className={style.footer_text}>Итого: {modalSum === 0 ? elem.price : modalSum} руб</h2>
+          <h2 className={style.footer_text}>
+            Итого: {modalSum === 0 ? elem.price : modalSum} руб
+          </h2>
         </footer>
       </div>
     </div>

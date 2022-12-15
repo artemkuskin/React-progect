@@ -1,23 +1,21 @@
 import React from "react";
 import { useDispatch } from "react-redux";
+import { ProductsContainer } from "../productsContainer/ProductsContainer";
 import { logout } from "../../Store/slice";
 import { Basket } from "../Basket/Basket";
 import { ModalBody } from "../Modal/ModalBody/ModalBody";
-import { Product } from "../Product/Product";
 import { SideMenu } from "../SideMenu/SideMenu";
-import style from './style'
+import style from "./style";
 
- 
-
- export const MainComponent = () => {
+export const MainComponent = () => {
+  const dispatch = useDispatch();
 
   const exit = () => {
-    dispatch(logout)
-  }
+    dispatch(logout());
+  };
 
-  const dispatch = useDispatch()
-   return (
-        <div>
+  return (
+    <div>
       <h1 className={style.title}>СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА</h1>
       <button onClick={() => exit()}>Выйти</button>
       <div className={style.contant}>
@@ -25,14 +23,9 @@ import style from './style'
           <SideMenu />
           <Basket />
         </div>
-        {/* <div id={style.container} className="pizza">
-          {menu.map((product) => {
-            return <Product product={product} key={product.id} />;
-          })}
-        </div> */}
+        <ProductsContainer />
         <ModalBody />
       </div>
     </div>
   );
-   
- }
+};

@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice, modalCategorySlice } from "../../../Store/slice";
+import { appSlice } from "../../../Store/slice";
 import style from "./style";
 
 export const ModalCategory = () => {

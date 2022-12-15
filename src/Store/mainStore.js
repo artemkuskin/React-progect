@@ -1,17 +1,14 @@
 import { configureStore } from "@reduxjs/toolkit";
-import { combineReducers } from "redux"; 
+import { combineReducers } from "redux";
 
-import { appReducer, openModalReducer } from "./slice";
-
-//export const store = createStore(rootReducer)
+import { appReducer } from "./slice";
 
 const rootReducer = combineReducers({
-    appReducer,
-})
+  appReducer,
+});
 
 export const setupStore = () => {
-    return configureStore({
-        reducer: rootReducer
-    })
-    
-}
+  return configureStore({
+    reducer: rootReducer,
+  });
+};
