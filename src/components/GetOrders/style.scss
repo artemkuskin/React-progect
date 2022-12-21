@@ -1,0 +1,85 @@
+.modalActive {
+  display: block;
+  text-align: center;
+  align-items: center;
+  position: fixed;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+.container {
+  background-color: rgb(231, 231, 231);
+  max-width: 800px;
+  margin: auto;
+  height: 790px;
+  box-shadow: 1px 1px 6px 0px black;
+  border-radius: 10px;
+  overflow: auto;
+}
+
+.content__ingredients_price {
+  margin-top: 5px;
+  margin-top: 104px;
+}
+
+.fon {
+  display: none;
+  text-align: center;
+  align-items: center;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  z-index: 1000;
+}
+
+#fon--active {
+  visibility: visible;
+}
+
+.content__ingredients {
+  background-color: rgb(231, 231, 231);
+  max-width: 500px;
+  max-height: 400px;
+  margin: auto;
+  height: 766px;
+  box-shadow: 1px 1px 6px 0px black;
+  border-radius: 10px;
+}
+
+.content__ingredients {
+  margin: 142px auto;
+  border: 1px solid #888;
+  height: 77%;
+  z-index: 99999;
+}
+
+.close_modal_window {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.content__ingredients {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.content__ingredients_title {
+  background-color: rgba(255, 208, 0);
+  padding: 1px 10px 1px 0px;
+  margin-bottom: 20px;
+  border-top-left-radius: 10px;
+  border-top-right-radius: 10px;
+  position: fixed;
+  width: 491px;
+}

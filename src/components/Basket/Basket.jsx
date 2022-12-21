@@ -6,10 +6,14 @@ import style from "./style";
 
 export const Basket = () => {
   const dispatch = useDispatch();
-  const { basket, sum, user, allOrders, productOrder } = useSelector(
-    (state) => state.appReducer
-  );
-  const { updateSum, deleteBasket, getProductOrders } = appSlice.actions;
+  const { basket, sum, user} =
+    useSelector((state) => state.appReducer);
+  const {
+    updateSum,
+    deleteBasket,
+    getProductOrders,
+    openModalOrders,
+  } = appSlice.actions;
 
   const deleteElem = (elem) => {
     dispatch(deleteBasket(elem.id));
@@ -38,11 +42,15 @@ export const Basket = () => {
     return order;
   };
 
-  // const getAllOrders = () => {
-  //   dispatch(getOrders());
-  //   dispatch(getProductOrders())
-  //   console.log(productOrder);
-  // };
+  const getAllOrders = () => {
+    dispatch(getOrders());
+    dispatch(getProductOrders());
+    dispatch(openModalOrders(true));
+  };
+
+  const createOrders = () => {
+    dispatch(setOrder(createOrder()))
+  }
 
   return (
     <div className={style.basket}>
@@ -77,11 +85,13 @@ export const Basket = () => {
       <p id={style.result_sum}>Итого:{sum} Руб</p>
       <button
         className={style.basket_button}
-        onClick={() => dispatch(setOrder(createOrder()))}
+        onClick={() => createOrders()}
       >
         ОФОРМИТЬ ЗАКАЗ
       </button>
-     <GetOrders />
+      <button className={style.basket_button} onClick={() => getAllOrders()}>
+        ПОКАЗАТЬ ЗАКАЗ
+      </button>
     </div>
   );
 };

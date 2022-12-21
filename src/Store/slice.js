@@ -8,6 +8,7 @@ const initialState = {
   allOrders: [],
   productOrder: [],
   user: {},
+  openModalOrder: false,
   isAuth: false,
   isLoading: false,
   menu2: {},
@@ -38,9 +39,9 @@ export const loadMenu = createAsyncThunk("app/loadMenu", async () => {
 
 export const login = createAsyncThunk(
   "app/getUser",
-  async ({ email, password }, { rejectWithValue }) => {
+  async ({ email, password }) => {
     const response = await AuthServices.login(email, password);
-   // console.log(response.data);
+    console.log(response.data);
     localStorage.setItem("token", response.data.token);
     return response.data;
   }
@@ -50,7 +51,7 @@ export const registr = createAsyncThunk(
   "app/registration",
   async ({ email, password }) => {
     const response = await AuthServices.registration(email, password);
-   // console.log(email);
+    // console.log(email);
     localStorage.setItem("token", response.data.token);
     return response.data;
   }
@@ -62,14 +63,14 @@ export const logout = createAsyncThunk("app/logout", async () => {
 
 export const setOrder = createAsyncThunk("app/setOrder", async (elem) => {
   const response = await OrderService.order(elem);
- // console.log(elem, "............................");
+  // console.log(elem, "............................");
   //console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
   return response.data;
 });
 
 export const getOrders = createAsyncThunk("app/getOrders", async () => {
   const response = await OrderService.getOrder();
-  //console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
+  console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
   return response.data;
 });
 
@@ -112,6 +113,9 @@ export const appSlice = createSlice({
       state.modal.allFiling = {};
       state.modal.allFiling.vegetables = [];
       state.modal.arrFill = [];
+    },
+    openModalOrders(state, action) {
+      state.openModalOrder = action.payload;
     },
     getMenu(state, action) {
       state.menu2 = action.payload;
@@ -172,18 +176,21 @@ export const appSlice = createSlice({
       }
     },
     getProductOrders(state, action) {
-      const productsOrder = state.allOrders
+      const productsOrder = state.allOrders;
       for (let key in productsOrder) {
-       state.productOrder =  productsOrder[key]?.products 
+        state.productOrder = productsOrder[key]?.products;
       }
-    }
+    },
   },
 
   extraReducers: (builder) => {
-    builder.addCase(registr.fulfilled, (state, action) => {
-      state.isAuth = true;
-      state.user = action.payload.token;
+    builder.addCase(getOrders.fulfilled, (state, action) => {
+      state.allOrders = action?.payload?.orders;
     }),
+      builder.addCase(registr.fulfilled, (state, action) => {
+        state.isAuth = true;
+        state.user = action.payload.token;
+      }),
       builder.addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
         state.user = action.payload.token;
@@ -198,9 +205,6 @@ export const appSlice = createSlice({
       }),
       builder.addCase(loadMenu.fulfilled, (state, action) => {
         state.menu2 = action.payload;
-      }),
-      builder.addCase(getOrders.fulfilled, (state, action) => {
-        state.allOrders = action.payload.orders;
       });
   },
 });

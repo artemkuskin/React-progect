@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import LoginForm from "./components/loginForn/loginForm";
 import { MainComponent } from "./components/MainComponent/MainComponent";
-import { checkAuth, loadMenu } from "./Store/slice";
+import { checkAuth, getOrders, loadMenu } from "./Store/slice";
 import styles from "./styles";
 
 const App = () => {
@@ -12,13 +12,10 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(checkAuth());
-      dispatch(loadMenu())
+      dispatch(loadMenu());
     }
-
   }, []);
 
-
-  
   if (!isAuth) {
     return (
       <div>
