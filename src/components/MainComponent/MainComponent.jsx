@@ -1,11 +1,11 @@
 import React from "react";
 import { useDispatch } from "react-redux";
 import { ProductsContainer } from "../productsContainer/ProductsContainer";
-import { logout } from "../../Store/slice";
 import { Basket } from "../Basket/Basket";
 import { ModalBody } from "../Modal/ModalBody/ModalBody";
 import { SideMenu } from "../SideMenu/SideMenu";
 import style from "./style";
+import { logout } from "../../Store/slice";
 
 export const MainComponent = () => {
   const dispatch = useDispatch();

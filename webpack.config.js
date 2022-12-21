@@ -1,4 +1,5 @@
 const webpack = require("webpack");
+const dotenv = require('dotenv')
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
@@ -6,7 +7,7 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 
 const production = process.env.NODE_ENV === 'production';
 
-
+dotenv.config();
 module.exports = {
     entry: { myAppName: path.resolve(__dirname, "./src/index.js") },
     output: {
@@ -49,6 +50,9 @@ module.exports = {
         extensions: ["*", ".js", ".jsx", ".scss"],
     },
     plugins: [
+        new webpack.DefinePlugin({
+            'process.env': JSON.stringify(process.env)
+         }),
         new CleanWebpackPlugin(),
         new webpack.HotModuleReplacementPlugin(),
         new HtmlWebpackPlugin({

@@ -8,6 +8,10 @@ export const SideMenu = () => {
   const { category } = useSelector((state) => state.appReducer);
   const { setCategory } = appSlice.actions;
 
+  const targetCategory = (name) => {
+    dispatch(setCategory(name));
+  };
+
   const list = [
     { name: "pizza", translation: "Пицца" },
     { name: "burgers", translation: "Бургеры" },
@@ -23,7 +27,7 @@ export const SideMenu = () => {
       <p
         key={item.name}
         id={item.name}
-        onClick={() => dispatch(setCategory(item.name))}
+        onClick={() => targetCategory(item.name)}
         className={category === item.name ? style.active : style.menu_link}
       >
         {item.translation}

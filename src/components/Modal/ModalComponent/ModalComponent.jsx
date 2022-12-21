@@ -10,30 +10,28 @@ export const ModalComponent = (props) => {
   const { addFillings: addSize, addModalSum } = appSlice.actions;
   const dispatch = useDispatch();
 
-  const addFillings = () => {
+  const add = () => {
     dispatch(addSize(props.product));
     dispatch(addModalSum());
+    console.log(allFiling);
   };
 
   const isActive = allFiling
     ? Array.isArray(allFiling[category])
-      ? allFiling[category].find((obj) => obj.id === props.product.id)
-      : allFiling[category]?.id === props.product.id
+      ? allFiling[category].find((obj) => obj.id === props.product._id)
+      : allFiling[category]?.id === props.product._id
     : false;
 
   return category === props.product.category ? (
     <div
       className={isActive ? style.active : style.price_popup}
-      id={props.product.id * 100}
-      onClick={() => addFillings()}
+      onClick={() => add()}
     >
       <div className={style.price_boll2}>
         <div className={style.price_boll}>
           <img
-            src={`http://localhost:5000/${props.product.category}/${props.product.image}`}
+            src={`${process.env.URL}${props.product.image}`}
             className={style.content__ingredients_img}
-            id={props.product.id}
-            // onClick={() => addFillings()}
           />{" "}
         </div>
       </div>

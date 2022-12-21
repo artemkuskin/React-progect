@@ -26,7 +26,7 @@ export const Product = (props) => {
   const addBasketElem = () => {
     const elemBasket = {
       name: props.product.name,
-      id: props.product.id,
+      id: props.product._id,
       price: props.product.price,
       amount: count,
     };
@@ -39,16 +39,21 @@ export const Product = (props) => {
       dispatch(changeModalCategory("sizes"));
     }
   };
-  return category === props.product.category ? (
-    <div className={style.contant_product} id={props.product.id}>
+
+  if (category !== props.product.category) {
+    return "";
+  }
+
+  return (
+    <div className={style.contant_product} id={props.product._id}>
       <img
-        src="http://localhost:5000/markets/subway_logo.png"
+        src={`${process.env.URL}images/markets/subway.png`}
         className={style.item_img}
       ></img>
       <div className={style.price_boll3}>
         <div className={style.price_boll}>
           <img
-            src={`http://localhost:5000/${props.product.category}/${props.product.image}`}
+            src={`${process.env.URL}${props.product.image}`}
             className={style.img}
             id={"y"}
           ></img>
@@ -92,7 +97,5 @@ export const Product = (props) => {
         В КОРЗИНУ
       </button>
     </div>
-  ) : (
-    ""
   );
 };

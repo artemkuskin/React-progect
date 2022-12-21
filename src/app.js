@@ -12,11 +12,14 @@ const App = () => {
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(checkAuth());
+      dispatch(loadMenu())
     }
-    dispatch(loadMenu());
+
   }, []);
 
-  if (!isAuth ) {
+
+  
+  if (!isAuth) {
     return (
       <div>
         <LoginForm />
@@ -24,9 +27,7 @@ const App = () => {
     );
   }
 
-  return (
-  menu2 ? <MainComponent /> : '');
-
+  return menu2 ? <MainComponent /> : "";
 };
 
 export default App;

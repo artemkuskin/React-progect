@@ -13,7 +13,7 @@ export const ResultCustomBurger = () => {
 
   const elemBasket = {
     name: elem.name,
-    id: elem.id,
+    id: elem._id,
     price: modalSum === 0 ? elem.price : modalSum,
     amount: count,
     filling: allFiling,
@@ -38,7 +38,7 @@ export const ResultCustomBurger = () => {
         <div className={style.price_boll2}>
           <div className={style.price_boll}>
             <img
-              src={`http://localhost:5000/${elem.category}/${elem.image}`}
+              src={`${process.env.URL}/${elem.image}`}
               className={style.content__ingredients_img}
             />{" "}
           </div>
@@ -65,7 +65,7 @@ export const ResultCustomBurger = () => {
           <p>
             Овощи:
             {allFiling.vegetables?.map((item) => (
-              <strong id="veget-name" key={item.id}>
+              <strong id="veget-name" key={item._id}>
                 {item !== undefined ? item.name : "Heт"},&nbsp;
               </strong>
             ))}

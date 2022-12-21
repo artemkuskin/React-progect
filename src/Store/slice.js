@@ -2,12 +2,15 @@ import { createAsyncThunk, createReducer, createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 import AuthServices from "../services/AuthService";
 import MenuServices from "../services/MenuServices";
+import OrderService from "../services/OrderService";
 
 const initialState = {
+  allOrders: [],
+  productOrder: [],
   user: {},
   isAuth: false,
   isLoading: false,
-  menu2: [],
+  menu2: {},
   category: "pizza",
   basket: [],
   sum: 0,
@@ -20,7 +23,7 @@ const initialState = {
     vegetables: {},
     fillings: {},
     arrFill: [],
-    sauces: {},
+    sauses: {},
     allFiling: {},
     modalSum: 0,
     isActive2: false,
@@ -28,64 +31,51 @@ const initialState = {
 };
 
 export const loadMenu = createAsyncThunk("app/loadMenu", async () => {
-  try {
-    const response = await MenuServices.fetchMenu();
-    console.log(response);
-    return response.data;
-  } catch {
-    console.log(e.response?.data?.messege);
-  }
+  const response = await MenuServices.fetchMenu();
+  //console.log(response);
+  return response.data;
 });
 
-export const getUser = createAsyncThunk(
+export const login = createAsyncThunk(
   "app/getUser",
-  async ({ email, password }) => {
-    try {
-      const response = await AuthServices.login(email, password);
-      // console.log(response);
-      localStorage.setItem("token", response.data.accessToken);
-      return response.data;
-    } catch (e) {
-      console.log(e.response?.data?.messege);
-    }
+  async ({ email, password }, { rejectWithValue }) => {
+    const response = await AuthServices.login(email, password);
+   // console.log(response.data);
+    localStorage.setItem("token", response.data.token);
+    return response.data;
   }
 );
 
 export const registr = createAsyncThunk(
   "app/registration",
   async ({ email, password }) => {
-    try {
-      const response = await AuthServices.registration(email, password);
-      // console.log(response);
-      localStorage.setItem("token", response.data.accessToken);
-      return response.data;
-    } catch (e) {
-      console.log(e.response?.data?.messege);
-    }
+    const response = await AuthServices.registration(email, password);
+   // console.log(email);
+    localStorage.setItem("token", response.data.token);
+    return response.data;
   }
 );
 
 export const logout = createAsyncThunk("app/logout", async () => {
-  try {
-    const response = await AuthServices.logout();
-    localStorage.removeItem("token");
-  } catch (e) {
-    console.log(e.response?.data?.messege);
-  }
+  localStorage.removeItem("token");
+});
+
+export const setOrder = createAsyncThunk("app/setOrder", async (elem) => {
+  const response = await OrderService.order(elem);
+ // console.log(elem, "............................");
+  //console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
+  return response.data;
+});
+
+export const getOrders = createAsyncThunk("app/getOrders", async () => {
+  const response = await OrderService.getOrder();
+  //console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
+  return response.data;
 });
 
 export const checkAuth = createAsyncThunk("app/checkAuth", async () => {
-  try {
-    const response = await axios.get(`http://localhost:5000/api/refresh`, {
-      withCredentials: true,
-    });
-    // console.log(response);
-    localStorage.setItem("token", response.data.accessToken);
-    // console.log(123423134134121234123);
-    return response.data;
-  } catch (e) {
-    console.log(e.response?.data?.messege);
-  }
+  const user = localStorage.getItem("token");
+  return { check: true, user: user };
 });
 
 export const appSlice = createSlice({
@@ -143,14 +133,14 @@ export const appSlice = createSlice({
     addFillings(state, action) {
       if (!Array.isArray(state.modal.allFiling[state.modal.category])) {
         state.modal[state.modal.category].name = action.payload.name;
-        state.modal[state.modal.category].id = action.payload.id;
+        state.modal[state.modal.category].id = action.payload._id;
         state.modal[state.modal.category].price = action.payload.price;
         state.modal[state.modal.category].category = action.payload.category;
         state.modal.allFiling[state.modal.category] =
           state.modal[state.modal.category];
       } else {
         state.modal[state.modal.category].name = action.payload.name;
-        state.modal[state.modal.category].id = action.payload.id;
+        state.modal[state.modal.category].id = action.payload._id;
         state.modal[state.modal.category].price = action.payload.price;
         state.modal[state.modal.category].category = action.payload.category;
         state.modal.arrFill.push(state.modal[state.modal.category]);
@@ -181,30 +171,38 @@ export const appSlice = createSlice({
         }
       }
     },
+    getProductOrders(state, action) {
+      const productsOrder = state.allOrders
+      for (let key in productsOrder) {
+       state.productOrder =  productsOrder[key]?.products 
+      }
+    }
   },
 
   extraReducers: (builder) => {
     builder.addCase(registr.fulfilled, (state, action) => {
       state.isAuth = true;
-      state.user = action.payload.user;
+      state.user = action.payload.token;
     }),
-      builder.addCase(getUser.fulfilled, (state, action) => {
+      builder.addCase(login.fulfilled, (state, action) => {
         state.isAuth = true;
-        state.user = action.payload.user;
+        state.user = action.payload.token;
       }),
       builder.addCase(logout.fulfilled, (state, action) => {
         state.isAuth = false;
         state.user = {};
       }),
       builder.addCase(checkAuth.fulfilled, (state, action) => {
-        state.isAuth = true;
+        state.isAuth = action.payload.check;
         state.user = action.payload.user;
       }),
       builder.addCase(loadMenu.fulfilled, (state, action) => {
         state.menu2 = action.payload;
+      }),
+      builder.addCase(getOrders.fulfilled, (state, action) => {
+        state.allOrders = action.payload.orders;
       });
   },
-
 });
 
 export const appReducer = appSlice.reducer;
