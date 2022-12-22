@@ -7,6 +7,7 @@ import OrderService from "../services/OrderService";
 const initialState = {
   allOrders: [],
   productOrder: [],
+  orderSum: 0,
   user: {},
   openModalOrder: false,
   isAuth: false,
@@ -64,7 +65,7 @@ export const logout = createAsyncThunk("app/logout", async () => {
 export const setOrder = createAsyncThunk("app/setOrder", async (elem) => {
   const response = await OrderService.order(elem);
   // console.log(elem, "............................");
-  //console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
+  console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
   return response.data;
 });
 
@@ -179,6 +180,7 @@ export const appSlice = createSlice({
       const productsOrder = state.allOrders;
       for (let key in productsOrder) {
         state.productOrder = productsOrder[key]?.products;
+        state.orderSum = productsOrder[key]?.sum
       }
     },
   },

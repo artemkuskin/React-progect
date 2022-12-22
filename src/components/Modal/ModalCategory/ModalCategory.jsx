@@ -25,7 +25,6 @@ export const ModalCategory = () => {
     return (
       <a
         key={item.name}
-        id={item.name}
         onClick={() => changeCategory(item.name)}
         className={
           modal.category === item.name ? style.active : style.categories_link

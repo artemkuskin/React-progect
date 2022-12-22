@@ -22,7 +22,6 @@ export const Basket = () => {
 
   const createOrder = () => {
     const order = {
-      user: user,
       products: [],
     };
     for (let key in basket) {

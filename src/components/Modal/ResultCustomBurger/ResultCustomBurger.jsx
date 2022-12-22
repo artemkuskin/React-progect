@@ -50,7 +50,7 @@ export const ResultCustomBurger = () => {
         <div className={style.block_side}>
           <p>
             Размер:
-            <strong id="sizes-name">
+            <strong>
               {allFiling.sizes !== undefined ? allFiling.sizes.name : "15см"}
             </strong>
           </p>
@@ -65,20 +65,20 @@ export const ResultCustomBurger = () => {
           <p>
             Овощи:
             {allFiling.vegetables?.map((item) => (
-              <strong id="veget-name" key={item._id}>
+              <strong key={item.id}>
                 {item !== undefined ? item.name : "Heт"},&nbsp;
               </strong>
             ))}
           </p>
           <p>
             Соусы:
-            <strong id="sous-name">
+            <strong >
               {allFiling.sauces !== undefined ? allFiling.sauces.name : "Heт"}
             </strong>
           </p>
           <p>
             Начинка:
-            <strong id="fill-name">
+            <strong >
               {allFiling.fillings !== undefined
                 ? allFiling.fillings.name
                 : "Heт"}

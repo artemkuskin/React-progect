@@ -6,7 +6,7 @@ import style from "./style";
 export const GetOrders = () => {
   const dispatch = useDispatch();
   const { openModalOrders } = appSlice.actions;
-  const { productOrder, openModalOrder } = useSelector(
+  const { productOrder, openModalOrder, orderSum } = useSelector(
     (state) => state.appReducer
   );
 
@@ -16,6 +16,7 @@ export const GetOrders = () => {
 
   const closeModal = () => {
     dispatch(openModalOrders(false));
+    console.log(orderSum);
   };
 
   return (
@@ -44,9 +45,9 @@ export const GetOrders = () => {
                     <select name="select">
                       <option value="asd">НАЧИНКИ</option>
                       {elem.additives.length > 0 ? (
-                        elem.additives.map((fbb) => (
-                          <option key={fbb.key} value={fbb.key} disabled>
-                            {fbb.additive.name}
+                        elem.additives.map((fillings) => (
+                          <option key={fillings._id} value={fillings.key} disabled>
+                            {fillings.additive.name}
                           </option>
                         ))
                       ) : (
@@ -61,9 +62,14 @@ export const GetOrders = () => {
               );
             })
           ) : (
-            <div>ЗАКАЗОВ НЕТ</div>
+            <div className={style.text_order}>ЗАКАЗОВ НЕТ</div>
           )}
         </div>
+        <footer>
+          <h2 className={style.footer_text}>
+            Итого: {orderSum} руб
+          </h2>
+        </footer>
       </div>
     </div>
   );

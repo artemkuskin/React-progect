@@ -55,14 +55,11 @@ export const Product = (props) => {
           <img
             src={`${process.env.URL}${props.product.image}`}
             className={style.img}
-            id={"y"}
           ></img>
         </div>
       </div>
       <div className={style.text}>
-        <p className={style.item_text} id={"b"}>
-          {props.product.name}
-        </p>
+        <p className={style.item_text}>{props.product.name}</p>
       </div>
       <div className={style.link}>
         {" "}
@@ -72,14 +69,10 @@ export const Product = (props) => {
       </div>
       <p className={style.container_text}>
         Цена
-        <strong className={style.price_one} id={"v"}>
-          {" "}
-          {props.product.price}
-        </strong>{" "}
-        руб
+        <strong className={style.price_one}> {props.product.price}</strong> руб
       </p>
       <p className={style.item_link_text}>КОЛИЧЕСТВО</p>
-      <div id="{1000}">
+      <div>
         <button className={style.increase} onClick={() => increment()}>
           +
         </button>
