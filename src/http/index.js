@@ -12,6 +12,13 @@ $api.interceptors.request.use((config) => {
   return config;
 });
 
+// $api.interceptors.request.use((parser) => {
+//   //config.data = config;
+//   console.log('a');
+//   parser.data = 'шаурма'
+//   return parser;
+// });
+
 $api.interceptors.response.use(
   (response) => {
     return response;

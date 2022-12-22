@@ -7,6 +7,7 @@ import { SideMenu } from "../SideMenu/SideMenu";
 import style from "./style";
 import { logout } from "../../Store/slice";
 import { GetOrders } from "../GetOrders/GetOrders";
+import { Search } from "../Search/Search";
 
 export const MainComponent = () => {
   const dispatch = useDispatch();
@@ -19,6 +20,7 @@ export const MainComponent = () => {
     <div>
       <h1 className={style.title}>СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА</h1>
       <button onClick={() => exit()}>Выйти</button>
+      <Search/>
       <GetOrders />
       <div className={style.contant}>
         <div className={style.block}>

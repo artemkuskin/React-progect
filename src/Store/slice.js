@@ -3,8 +3,10 @@ import axios from "axios";
 import AuthServices from "../services/AuthService";
 import MenuServices from "../services/MenuServices";
 import OrderService from "../services/OrderService";
+import Serach from "../services/SearchService";
 
 const initialState = {
+  searchElem: [],
   allOrders: [],
   productOrder: [],
   orderSum: 0,
@@ -54,6 +56,16 @@ export const registr = createAsyncThunk(
     const response = await AuthServices.registration(email, password);
     // console.log(email);
     localStorage.setItem("token", response.data.token);
+    return response.data;
+  }
+);
+
+export const getSearch = createAsyncThunk(
+  "app/getSearch",
+  async (elem) => {
+    const response = await Serach.getSearchElem('шаурма');
+    console.log(response);
+    //localStorage.setItem("token", response.data.token);
     return response.data;
   }
 );
@@ -180,7 +192,7 @@ export const appSlice = createSlice({
       const productsOrder = state.allOrders;
       for (let key in productsOrder) {
         state.productOrder = productsOrder[key]?.products;
-        state.orderSum = productsOrder[key]?.sum
+        state.orderSum = productsOrder[key]?.sumOrder
       }
     },
   },
@@ -204,6 +216,9 @@ export const appSlice = createSlice({
       builder.addCase(checkAuth.fulfilled, (state, action) => {
         state.isAuth = action.payload.check;
         state.user = action.payload.user;
+      }),
+      builder.addCase(getSearch.fulfilled, (state, action) => {
+        state.searchElem = action.payload.resaultSearch;
       }),
       builder.addCase(loadMenu.fulfilled, (state, action) => {
         state.menu2 = action.payload;
