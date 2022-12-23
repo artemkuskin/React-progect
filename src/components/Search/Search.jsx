@@ -1,7 +1,7 @@
 import React from "react";
 import style from "./style";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice, getSearch } from "../../Store/slice";
+import { getSearch } from "../../Store/slice";
 import { useState } from "react";
 
 export const Search = () => {
@@ -23,13 +23,11 @@ export const Search = () => {
           onChange={(e) => setName(e.target.value)}
           value={name}
         />
-        <datalist id="character">
-          {/* {searchElem.map((fillings) => (
-            <option key={fillings._id} value={fillings.name} ></option>
-          ))} */}
-        </datalist>
+        <datalist id="character"></datalist>
       </p>
-      <button onClick={() => search()} className={style.search_button}>Поиск</button>
+      <button onClick={() => search()} className={style.search_button}>
+        Поиск
+      </button>
     </div>
   );
 };

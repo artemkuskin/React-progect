@@ -19,8 +19,10 @@ export const MainComponent = () => {
   return (
     <div>
       <h1 className={style.title}>СДЕЛАЙТЕ ЗАКАЗ НАПРЯМУЮ ИЗ РЕСТОРАНА</h1>
-      <button onClick={() => exit()} className={style.exit_button}>Выйти</button>
-      <Search/>
+      <button onClick={() => exit()} className={style.exit_button}>
+        Выйти
+      </button>
+      <Search />
       <GetOrders />
       <div className={style.contant}>
         <div className={style.block}>

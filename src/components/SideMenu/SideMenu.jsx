@@ -10,7 +10,7 @@ export const SideMenu = () => {
 
   const targetCategory = (name) => {
     dispatch(setCategory(name));
-    dispatch(getSearch({ name: '', category: name }));
+    dispatch(getSearch({ name: "", category: name }));
   };
 
   const list = [

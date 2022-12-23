@@ -190,7 +190,7 @@ export const appSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(getOrders.fulfilled, (state, action) => {
       state.allOrders = action?.payload?.orders;
-      state.orderSum = action?.payload?.sumAllOrders
+      state.orderSum = action?.payload?.sumAllOrders;
     }),
       builder.addCase(registr.fulfilled, (state, action) => {
         state.isAuth = true;

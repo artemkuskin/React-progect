@@ -72,13 +72,13 @@ export const ResultCustomBurger = () => {
           </p>
           <p>
             Соусы:
-            <strong >
+            <strong>
               {allFiling.sauces !== undefined ? allFiling.sauces.name : "Heт"}
             </strong>
           </p>
           <p>
             Начинка:
-            <strong >
+            <strong>
               {allFiling.fillings !== undefined
                 ? allFiling.fillings.name
                 : "Heт"}

@@ -1,19 +1,12 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { appSlice, getOrders, setOrder } from "../../Store/slice";
-import { GetOrders } from "../GetOrders/GetOrders";
 import style from "./style";
 
 export const Basket = () => {
   const dispatch = useDispatch();
-  const { basket, sum, user} =
-    useSelector((state) => state.appReducer);
-  const {
-    updateSum,
-    deleteBasket,
-    getProductOrders,
-    openModalOrders,
-  } = appSlice.actions;
+  const { basket, sum } = useSelector((state) => state.appReducer);
+  const { updateSum, deleteBasket, openModalOrders } = appSlice.actions;
 
   const deleteElem = (elem) => {
     dispatch(deleteBasket(elem.id));
@@ -47,8 +40,8 @@ export const Basket = () => {
   };
 
   const createOrders = () => {
-    dispatch(setOrder(createOrder()))
-  }
+    dispatch(setOrder(createOrder()));
+  };
 
   return (
     <div className={style.basket}>
@@ -81,10 +74,7 @@ export const Basket = () => {
         </div>
       </div>
       <p id={style.result_sum}>Итого:{sum} Руб</p>
-      <button
-        className={style.basket_button}
-        onClick={() => createOrders()}
-      >
+      <button className={style.basket_button} onClick={() => createOrders()}>
         ОФОРМИТЬ ЗАКАЗ
       </button>
       <button className={style.basket_button} onClick={() => getAllOrders()}>

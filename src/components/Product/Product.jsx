@@ -45,7 +45,11 @@ export const Product = (props) => {
   }
 
   return (
-    <div className={style.contant_product} id={props.product._id} href={props.product._id}>
+    <div
+      className={style.contant_product}
+      id={props.product._id}
+      href={props.product._id}
+    >
       <img
         src={`${process.env.URL}images/markets/subway.png`}
         className={style.item_img}
