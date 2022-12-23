@@ -60,15 +60,12 @@ export const registr = createAsyncThunk(
   }
 );
 
-export const getSearch = createAsyncThunk(
-  "app/getSearch",
-  async (elem) => {
-    const response = await Serach.getSearchElem('шаурма');
-    console.log(response);
-    //localStorage.setItem("token", response.data.token);
-    return response.data;
-  }
-);
+export const getSearch = createAsyncThunk("app/getSearch", async (elem) => {
+  const response = await Serach.getSearchElem(elem);
+  console.log(response);
+  //localStorage.setItem("token", response.data.token);
+  return response.data;
+});
 
 export const logout = createAsyncThunk("app/logout", async () => {
   localStorage.removeItem("token");
@@ -188,18 +185,12 @@ export const appSlice = createSlice({
         }
       }
     },
-    getProductOrders(state, action) {
-      const productsOrder = state.allOrders;
-      for (let key in productsOrder) {
-        state.productOrder = productsOrder[key]?.products;
-        state.orderSum = productsOrder[key]?.sumOrder
-      }
-    },
   },
 
   extraReducers: (builder) => {
     builder.addCase(getOrders.fulfilled, (state, action) => {
       state.allOrders = action?.payload?.orders;
+      state.orderSum = action?.payload?.sumAllOrders
     }),
       builder.addCase(registr.fulfilled, (state, action) => {
         state.isAuth = true;
@@ -218,7 +209,7 @@ export const appSlice = createSlice({
         state.user = action.payload.user;
       }),
       builder.addCase(getSearch.fulfilled, (state, action) => {
-        state.searchElem = action.payload.resaultSearch;
+        state.searchElem = action.payload.foundProducts;
       }),
       builder.addCase(loadMenu.fulfilled, (state, action) => {
         state.menu2 = action.payload;

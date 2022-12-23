@@ -1,18 +1,14 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice, getOrders } from "../../Store/slice";
+import { appSlice } from "../../Store/slice";
 import style from "./style";
 
 export const GetOrders = () => {
   const dispatch = useDispatch();
   const { openModalOrders } = appSlice.actions;
-  const { productOrder, openModalOrder, orderSum } = useSelector(
+  const { productOrder, openModalOrder, orderSum, allOrders } = useSelector(
     (state) => state.appReducer
   );
-
-  useEffect(() => {
-    dispatch(getOrders());
-  }, []);
 
   const closeModal = () => {
     dispatch(openModalOrders(false));
@@ -36,11 +32,12 @@ export const GetOrders = () => {
         </div>
 
         <div className={style.content__ingredients_price}>
-          {productOrder.length > 0 ? (
-            productOrder.map((elem) => {
+          {
+            allOrders.map((value) => {
               return (
-                <div key={elem._id}>
-                  <p className="product_name" id={elem._id}>
+                <div key={value._id}>
+                  {value.products.map((elem) => 
+                  <p className="product_name" id={elem._id} key={elem._id}>
                     {elem.product.name} - {elem.quantity}
                     <select name="select">
                       <option value="asd">НАЧИНКИ</option>
@@ -57,13 +54,14 @@ export const GetOrders = () => {
                       )}
                       ;
                     </select>
+                    
                   </p>
+                  )}
                 </div>
               );
             })
-          ) : (
-            <div className={style.text_order}>ЗАКАЗОВ НЕТ</div>
-          )}
+          
+          }
         </div>
         <footer>
           <h2 className={style.footer_text}>

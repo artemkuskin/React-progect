@@ -1,6 +1,6 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice } from "../../Store/slice";
+import { appSlice, getSearch } from "../../Store/slice";
 import style from "./style";
 
 export const SideMenu = () => {
@@ -10,6 +10,7 @@ export const SideMenu = () => {
 
   const targetCategory = (name) => {
     dispatch(setCategory(name));
+    dispatch(getSearch({ name: '', category: name }));
   };
 
   const list = [

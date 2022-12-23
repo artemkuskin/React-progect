@@ -4,13 +4,13 @@ import { Product } from "../Product/Product";
 import style from "./style";
 
 export const ProductsContainer = () => {
-  const { menu2 } = useSelector((state) => state.appReducer);
+  const { menu2, searchElem } = useSelector((state) => state.appReducer);
 
   return (
-    <div id={style.container} className="pizza">
-      {menu2.menu?.map((product) => {
-        return <Product product={product} key={product._id} />;
-      })}
+    <div id={style.container}>
+      { searchElem.map((product) => {
+            return <Product product={product} key={product._id} />;
+          })}
     </div>
   );
 };

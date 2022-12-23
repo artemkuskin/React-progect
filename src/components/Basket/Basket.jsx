@@ -43,7 +43,6 @@ export const Basket = () => {
 
   const getAllOrders = () => {
     dispatch(getOrders());
-    dispatch(getProductOrders());
     dispatch(openModalOrders(true));
   };
 
