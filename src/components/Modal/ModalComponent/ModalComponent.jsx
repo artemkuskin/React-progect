@@ -4,16 +4,15 @@ import { appSlice } from "../../../Store/slice";
 import style from "./style";
 
 export const ModalComponent = (props) => {
+  const dispatch = useDispatch();
+  const { addFillings: addSize, addModalSum } = appSlice.actions;
   const { category, allFiling } = useSelector(
     (state) => state.appReducer.modal
   );
-  const { addFillings: addSize, addModalSum } = appSlice.actions;
-  const dispatch = useDispatch();
 
   const add = () => {
     dispatch(addSize(props.product));
     dispatch(addModalSum());
-    console.log(allFiling);
   };
 
   const isActive = allFiling
@@ -35,7 +34,7 @@ export const ModalComponent = (props) => {
           />{" "}
         </div>
       </div>
-      <h4 className="name">{props.product.name}</h4>
+      <h4>{props.product.name}</h4>
       <a href="#" className={style.item_description}>
         {props.product.description}{" "}
       </a>

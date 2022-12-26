@@ -56,7 +56,7 @@ export const ResultCustomBurger = () => {
           </p>
           <p>
             Хлеб:
-            <strong id="breads-name">
+            <strong>
               {allFiling.breads !== undefined
                 ? allFiling.breads.name
                 : "Белый-итальянский"}

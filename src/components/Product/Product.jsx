@@ -30,9 +30,11 @@ export const Product = (props) => {
       price: props.product.price,
       amount: count,
     };
+
     if (category !== "sandwiches") {
       dispatch(getBasket(elemBasket));
       dispatch(updateSum());
+      console.log(props);
     } else {
       dispatch(openModal(true));
       dispatch(modalElem(props.product));

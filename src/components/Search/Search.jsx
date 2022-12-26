@@ -10,7 +10,6 @@ export const Search = () => {
   const [name, setName] = useState("");
 
   const search = () => {
-    console.log(searchElem);
     dispatch(getSearch({ name: name, category: category }));
   };
 
@@ -22,6 +21,11 @@ export const Search = () => {
           placeholder="Найти"
           onChange={(e) => setName(e.target.value)}
           value={name}
+          onKeyDown={(ev) => {
+            if (ev.keyCode == 13) {
+              search()
+            }
+          }}
         />
         <datalist id="character"></datalist>
       </p>

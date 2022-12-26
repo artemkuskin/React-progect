@@ -7,13 +7,14 @@ import styles from "./styles";
 
 const App = () => {
   const dispatch = useDispatch();
-  const { isAuth, menu2, category } = useSelector((state) => state.appReducer);
+  const isAuth = useSelector((state) => state.appReducer.isAuth);
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(checkAuth());
-      dispatch(getSearch({ name: "", category: category }));
-      dispatch(getSearch());
+      // dispatch(getSearch({ name: "", category: category }));
+      dispatch(loadMenu());
+      // dispatch(getSearch());
     }
   }, []);
 
@@ -25,11 +26,7 @@ const App = () => {
     );
   }
 
-  return menu2 ? (
-    <MainComponent />
-  ) : (
-    <div className={styles.text}>isLoading.....</div>
-  );
+  return <MainComponent />;
 };
 
 export default App;

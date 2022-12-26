@@ -5,7 +5,7 @@ import { ModalComponent } from "../ModalComponent/ModalComponent";
 export const ModalProductContainer = () => {
   const { menu2 } = useSelector((state) => state.appReducer);
 
-  return menu2.additives?.map((product) => {
-    return <ModalComponent product={product} key={product._id} />;
-  });
+  return menu2.additives?.map((product) => (
+    <ModalComponent product={product} key={product._id} />
+  ));
 };

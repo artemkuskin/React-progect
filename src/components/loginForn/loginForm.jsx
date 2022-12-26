@@ -8,6 +8,7 @@ const LoginForm = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+
   const addUser = () => {
     dispatch(login({ email, password }));
     dispatch(loadMenu());

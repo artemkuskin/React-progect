@@ -63,7 +63,7 @@ export const Basket = () => {
             {basket.map((elem) => {
               return (
                 <div key={elem.id} className={style.basketElem}>
-                  <p className="product_name" id={elem.id}>
+                  <p id={elem.id}>
                     {elem.name} - {elem.amount}
                   </p>
                   <button onClick={() => deleteElem(elem)}>X</button>

@@ -13,7 +13,6 @@ const initialState = {
   user: {},
   openModalOrder: false,
   isAuth: false,
-  isLoading: false,
   menu2: {},
   category: "pizza",
   basket: [],
@@ -36,7 +35,7 @@ const initialState = {
 
 export const loadMenu = createAsyncThunk("app/loadMenu", async () => {
   const response = await MenuServices.fetchMenu();
-  //console.log(response);
+  console.log(response);
   return response.data;
 });
 

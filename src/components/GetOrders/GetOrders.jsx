@@ -35,10 +35,10 @@ export const GetOrders = () => {
             return (
               <div key={value._id}>
                 {value.products.map((elem) => (
-                  <p className="product_name" id={elem._id} key={elem._id}>
+                  <p id={elem._id} key={elem._id}>
                     {elem.product.name} - {elem.quantity}
-                    <select name="select">
-                      <option value="asd">НАЧИНКИ</option>
+                    <select>
+                      <option>НАЧИНКИ</option>
                       {elem.additives.length > 0 ? (
                         elem.additives.map((fillings) => (
                           <option
@@ -50,9 +50,7 @@ export const GetOrders = () => {
                           </option>
                         ))
                       ) : (
-                        <option value="asd" disabled>
-                          НЕТ НАЧИНКИ
-                        </option>
+                        <option disabled>НЕТ НАЧИНКИ</option>
                       )}
                       ;
                     </select>
