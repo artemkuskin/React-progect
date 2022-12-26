@@ -1,6 +1,6 @@
-import React from "react";
+import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice } from "../../Store/slice";
+import { appSlice, getOrders } from "../../Store/slice";
 import style from "./style";
 
 export const GetOrders = () => {
@@ -9,10 +9,20 @@ export const GetOrders = () => {
   const { openModalOrder, orderSum, allOrders } = useSelector(
     (state) => state.appReducer
   );
-
+  const [page, setPage] = useState(1)
   const closeModal = () => {
     dispatch(openModalOrders(false));
   };
+
+  const nextPage = () => {
+    setPage(page + 1)
+    dispatch(getOrders({limit:1, page:page}));
+  }
+
+  const backPage = () => {
+    setPage(paga - 1)
+    dispatch(getOrders({limit:1, page:page}));
+  }
 
   return (
     <div
@@ -59,6 +69,11 @@ export const GetOrders = () => {
               </div>
             );
           })}
+          <div>
+            <button onClick={() => backPage()}>Назад</button>
+            <button onClick={() => nextPage()}>Вперед</button>
+            <p>Страница{page - 1}</p>
+          </div>
         </div>
         <footer>
           <h2 className={style.footer_text}>Итого: {orderSum} руб</h2>

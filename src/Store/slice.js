@@ -77,8 +77,8 @@ export const setOrder = createAsyncThunk("app/setOrder", async (elem) => {
   return response.data;
 });
 
-export const getOrders = createAsyncThunk("app/getOrders", async () => {
-  const response = await OrderService.getOrder();
+export const getOrders = createAsyncThunk("app/getOrders", async (params) => {
+  const response = await OrderService.getOrder(params);
   console.log(response.data, ">>>>>>>>>>>>>>>>>>>.");
   return response.data;
 });

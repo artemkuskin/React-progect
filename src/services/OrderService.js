@@ -5,7 +5,7 @@ export default class OrderService {
     return $api.post("/order", elem);
   }
 
-  static async getOrder() {
-    return $api.get("/getOrders");
+  static async getOrder(params) {
+    return $api.get(`/getOrders?limit=${params.limit}&page=${params.page}`, );
   }
 }

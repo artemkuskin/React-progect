@@ -8,6 +8,7 @@ export const Basket = () => {
   const { basket, sum } = useSelector((state) => state.appReducer);
   const { updateSum, deleteBasket, openModalOrders } = appSlice.actions;
 
+
   const deleteElem = (elem) => {
     dispatch(deleteBasket(elem.id));
     dispatch(updateSum());
@@ -35,7 +36,7 @@ export const Basket = () => {
   };
 
   const getAllOrders = () => {
-    dispatch(getOrders());
+    dispatch(getOrders({limit:1, page:1}));
     dispatch(openModalOrders(true));
   };
 
