@@ -1,20 +1,24 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import LoginForm from "./components/loginForn/loginForm";
+import LoginForm from "./components/LoginForn/LoginForm";
 import { MainComponent } from "./components/MainComponent/MainComponent";
-import { checkAuth, getSearch, loadMenu } from "./Store/slice";
-import styles from "./styles";
+import { checkAuth } from "./Store/asyncThunk/checkAuth";
+import { loadMenu } from "./Store/asyncThunk/loadMenu";
+import { appSlice } from "./Store/mainSlice";
+import "./styles.scss";
 
 const App = () => {
   const dispatch = useDispatch();
   const isAuth = useSelector((state) => state.appReducer.isAuth);
+  const { load } = appSlice.actions;
 
   useEffect(() => {
     if (localStorage.getItem("token")) {
       dispatch(checkAuth());
-      // dispatch(getSearch({ name: "", category: category }));
       dispatch(loadMenu());
-      // dispatch(getSearch());
+      setTimeout(() => {
+        dispatch(load());
+      }, 500);
     }
   }, []);
 

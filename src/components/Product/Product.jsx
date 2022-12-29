@@ -1,26 +1,29 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice } from "../../Store/slice";
+import { modalSlice } from "../../Store/modalSlice";
+import { appSlice } from "../../Store/mainSlice";
 import style from "./style";
 
 export const Product = (props) => {
   const [count, setCount] = useState(1);
   const dispatch = useDispatch();
   const { category } = useSelector((state) => state.appReducer);
-  const {
-    addBasket: getBasket,
-    modalElem,
-    updateSum,
-    changeModalCategory,
-    openModal,
-  } = appSlice.actions;
+  const { updateSum } = appSlice.actions;
+
+  const {modalElem, openModal, changeModalCategory } = modalSlice.actions;
+  const { addBasket: getBasket} = appSlice.actions;
+  
 
   const increment = () => {
     setCount(count + 1);
   };
 
   const decrement = () => {
-    setCount(count - 1);
+    if (count <= 1) {
+      setCount(1);
+    } else {
+      setCount(count - 1);
+    }
   };
 
   const addBasketElem = () => {
@@ -34,7 +37,6 @@ export const Product = (props) => {
     if (category !== "sandwiches") {
       dispatch(getBasket(elemBasket));
       dispatch(updateSum());
-      console.log(props);
     } else {
       dispatch(openModal(true));
       dispatch(modalElem(props.product));
@@ -68,10 +70,9 @@ export const Product = (props) => {
         <p className={style.item_text}>{props.product.name}</p>
       </div>
       <div className={style.link}>
-        {" "}
         <a href="#" className={style.item_link}>
           {props.product.description}
-        </a>{" "}
+        </a>
       </div>
       <p className={style.container_text}>
         Цена

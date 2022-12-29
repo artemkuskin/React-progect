@@ -1,13 +1,19 @@
 import React from "react";
+import { toastr } from "react-redux-toastr";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice, getOrders, setOrder } from "../../Store/slice";
+import { appSlice } from "../../Store/mainSlice";
 import style from "./style";
+import { setOrder } from "../../Store/asyncThunk/setOrder";
+import { getOrders } from "../../Store/asyncThunk/getOrders";
+
+const DEFAULT_PAGE = 1;
+const LIMIT = 1;
 
 export const Basket = () => {
   const dispatch = useDispatch();
   const { basket, sum } = useSelector((state) => state.appReducer);
-  const { updateSum, deleteBasket, openModalOrders } = appSlice.actions;
-
+  const { updateSum, deleteBasket, openModalOrders, deleteAllElemBasket } =
+    appSlice.actions;
 
   const deleteElem = (elem) => {
     dispatch(deleteBasket(elem.id));
@@ -31,17 +37,23 @@ export const Basket = () => {
       }
       order.products.push(elem);
     }
-    console.log(JSON.stringify(order));
     return order;
   };
 
   const getAllOrders = () => {
-    dispatch(getOrders({limit:1, page:1}));
+    dispatch(getOrders({ limit: LIMIT, page: DEFAULT_PAGE }));
     dispatch(openModalOrders(true));
   };
 
   const createOrders = () => {
-    dispatch(setOrder(createOrder()));
+    if (basket.length > 0) {
+      dispatch(setOrder(createOrder()));
+      dispatch(deleteAllElemBasket());
+      dispatch(updateSum());
+      toastr.success("Заказ оформлен");
+    } else {
+      toastr.error("Корзина пустая");
+    }
   };
 
   return (
@@ -75,10 +87,10 @@ export const Basket = () => {
         </div>
       </div>
       <p id={style.result_sum}>Итого:{sum} Руб</p>
-      <button className={style.basket_button} onClick={() => createOrders()}>
+      <button className={style.basket_button} onClick={createOrders}>
         ОФОРМИТЬ ЗАКАЗ
       </button>
-      <button className={style.basket_button} onClick={() => getAllOrders()}>
+      <button className={style.basket_button} onClick={getAllOrders}>
         ПОКАЗАТЬ ЗАКАЗ
       </button>
     </div>

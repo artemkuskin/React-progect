@@ -2,20 +2,22 @@ import React from "react";
 import style from "./style";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { loadMenu, login, registr } from "../../Store/slice";
+import { loadMenu } from "../../Store/asyncThunk/loadMenu";
+import { registration } from "../../Store/asyncThunk/registration";
+import { login } from "../../Store/asyncThunk/login";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
-  const addUser = () => {
+  const loginUser = () => {
     dispatch(login({ email, password }));
     dispatch(loadMenu());
   };
 
-  const registration = () => {
-    dispatch(registr({ email, password }));
+  const registrationUser = () => {
+    dispatch(registration({ email, password }));
     dispatch(loadMenu());
   };
 
@@ -38,10 +40,10 @@ const LoginForm = () => {
           />
         </div>
         <div className={style.buttons}>
-          <button className={style.btn} onClick={() => addUser()}>
+          <button className={style.btn} onClick={() => loginUser()}>
             Логин
           </button>
-          <button className={style.btn} onClick={() => registration()}>
+          <button className={style.btn} onClick={() => registrationUser()}>
             Регистрация
           </button>
         </div>

@@ -3,7 +3,6 @@ import axios from "axios";
 export const URL = `${process.env.URL}api/`;
 
 const $api = axios.create({
-  withCredentials: true,
   baseURL: URL,
 });
 
@@ -16,8 +15,8 @@ $api.interceptors.response.use(
   (response) => {
     return response;
   },
-  function (error) {
-    console.log(error.response?.data?.message);
+  (error) => {
+    return Promise.reject(error);
   }
 );
 

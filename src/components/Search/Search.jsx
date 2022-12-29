@@ -1,12 +1,12 @@
 import React from "react";
 import style from "./style";
 import { useDispatch, useSelector } from "react-redux";
-import { getSearch } from "../../Store/slice";
 import { useState } from "react";
+import { getSearch } from "../../Store/asyncThunk/getSearch";
 
 export const Search = () => {
   const dispatch = useDispatch();
-  const { searchElem, category } = useSelector((state) => state.appReducer);
+  const { category } = useSelector((state) => state.appReducer);
   const [name, setName] = useState("");
 
   const search = () => {
@@ -23,13 +23,12 @@ export const Search = () => {
           value={name}
           onKeyDown={(ev) => {
             if (ev.keyCode == 13) {
-              search()
+              search();
             }
           }}
         />
-        <datalist id="character"></datalist>
       </p>
-      <button onClick={() => search()} className={style.search_button}>
+      <button onClick={search} className={style.search_button}>
         Поиск
       </button>
     </div>

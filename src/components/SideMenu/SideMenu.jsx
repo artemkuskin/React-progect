@@ -1,16 +1,21 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice, getSearch } from "../../Store/slice";
+import { getSearch } from "../../Store/asyncThunk/getSearch";
+import { appSlice } from "../../Store/mainSlice";
 import style from "./style";
 
 export const SideMenu = () => {
   const dispatch = useDispatch();
   const { category } = useSelector((state) => state.appReducer);
-  const { setCategory } = appSlice.actions;
+  const { setCategory, load, loadFalse } = appSlice.actions;
 
   const targetCategory = (name) => {
     dispatch(setCategory(name));
     dispatch(getSearch({ name: "", category: name }));
+    dispatch(loadFalse());
+    setTimeout(() => {
+      dispatch(load());
+    }, 500);
   };
 
   const list = [

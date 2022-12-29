@@ -1,6 +1,7 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { appSlice } from "../../../Store/slice";
+import { modalSlice } from "../../../Store/modalSlice";
+import { appSlice } from "../../../Store/mainSlice";
 import style from "./style";
 
 const categorys = [
@@ -14,8 +15,8 @@ const categorys = [
 
 export const ModalCategory = () => {
   const dispatch = useDispatch();
-  const { changeModalCategory } = appSlice.actions;
-  const { modal } = useSelector((state) => state.appReducer);
+  const { changeModalCategory } = modalSlice.actions;
+  const { category } = useSelector((state) => state.modal);
 
   const changeCategory = (name) => {
     dispatch(changeModalCategory(name));
@@ -27,7 +28,7 @@ export const ModalCategory = () => {
         key={item.name}
         onClick={() => changeCategory(item.name)}
         className={
-          modal.category === item.name ? style.active : style.categories_link
+         category === item.name ? style.active : style.categories_link
         }
       >
         {item.translation}

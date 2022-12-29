@@ -22,8 +22,9 @@
 }
 
 .content__ingredients_price {
-  margin-top: 5px;
-  margin-top: 104px;
+  margin-top: 59px;
+  max-height: 297px;
+  overflow: auto;
 }
 
 .fon {
@@ -70,6 +71,7 @@
 }
 
 .content__ingredients {
+  text-align: -webkit-center;
   transform: scale(1);
   opacity: 1;
 }
@@ -101,4 +103,18 @@ select {
 
 .text_order {
   font-size: xxx-large;
+}
+
+.text_page {
+  background-color: white;
+  border-color: black;
+  height: 20px;
+  width: 20px;
+  text-align: center;
+}
+
+.err_text {
+  font-size: 60px;
+  margin-top: 100px;
+  color: red;
 }

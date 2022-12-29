@@ -1,16 +1,17 @@
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { ModalCategory } from "../ModalCategory/ModalCategory";
-import { appSlice } from "../../../Store/slice";
+import { appSlice } from "../../../Store/mainSlice";
 import { ResultCustomBurger } from "../ResultCustomBurger/ResultCustomBurger";
 import style from "./style.scss";
 import { ModalProductContainer } from "../ModalProductContainer/ModalProductContainer";
+import { modalSlice } from "../../../Store/modalSlice";
 
 export const ModalBody = () => {
   const dispatch = useDispatch();
-  const { openModal } = appSlice.actions;
+  const { openModal } = modalSlice.actions;
   const { open, category, elem, modalSum } = useSelector(
-    (state) => state.appReducer.modal
+    (state) => state.modal
   );
 
   const closeModal = () => {
@@ -23,12 +24,7 @@ export const ModalBody = () => {
     <div id={style.fon} className={!open ? style.fon : style.modalActive}>
       <div className={style.content__ingredients} href="1">
         <div className={style.content__ingredients_title}>
-          <span
-            className={style.close_modal_window}
-            onClick={() => {
-              closeModal();
-            }}
-          >
+          <span className={style.close_modal_window} onClick={closeModal}>
             X
           </span>
           <h2 className={style.content__ingredients_title_text}>

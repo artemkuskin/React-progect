@@ -1,9 +1,12 @@
 import { createRoot } from "react-dom/client";
 import React from "react";
-
+import ReduxToastr from "react-redux-toastr";
 import App from "./app";
 import { Provider } from "react-redux";
 import { setupStore } from "./Store/mainStore";
+import "react-redux-toastr/src/styles/index";
+
+import "./styles.scss";
 
 let container = null;
 
@@ -15,6 +18,7 @@ document.addEventListener("DOMContentLoaded", function (event) {
     root.render(
       <Provider store={store}>
         <App />
+        <ReduxToastr />
       </Provider>
     );
   }
